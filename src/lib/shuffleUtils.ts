@@ -3,6 +3,7 @@ import { MathQuestion } from "@/data/mathQuestions";
 import { AdvertisingQuestion } from "@/data/advertisingQuestions";
 import { BankingQuestion } from "@/data/bankingQuestions";
 import { HealthQuestion } from "@/data/healthQuestions";
+import { Unit2Question } from "@/data/unit2Questions";
 
 // Fisher-Yates shuffle algorithm
 export const shuffleArray = <T>(array: T[]): T[] => {
@@ -104,6 +105,28 @@ export const shuffleBankingQuestions = (questions: BankingQuestion[]): BankingQu
 
 // Shuffle health questions and their options while maintaining correct answer tracking  
 export const shuffleHealthQuestions = (questions: HealthQuestion[]): HealthQuestion[] => {
+  const shuffledQuestions = shuffleArray(questions);
+  
+  return shuffledQuestions.map(question => {
+    const originalOptions = [...question.options];
+    const correctOption = originalOptions[question.correctAnswer];
+    
+    // Shuffle options
+    const shuffledOptions = shuffleArray(originalOptions);
+    
+    // Find new index of correct answer
+    const newCorrectAnswer = shuffledOptions.indexOf(correctOption);
+    
+    return {
+      ...question,
+      options: shuffledOptions,
+      correctAnswer: newCorrectAnswer
+    };
+  });
+};
+
+// Shuffle unit2 questions and their options while maintaining correct answer tracking  
+export const shuffleUnit2Questions = (questions: Unit2Question[]): Unit2Question[] => {
   const shuffledQuestions = shuffleArray(questions);
   
   return shuffledQuestions.map(question => {

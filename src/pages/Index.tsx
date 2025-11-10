@@ -6,10 +6,11 @@ import { MathQuiz } from "@/components/MathQuiz";
 import { AdvertisingQuiz } from "@/components/AdvertisingQuiz";
 import { BankingQuiz } from "@/components/BankingQuiz";
 import { HealthQuiz } from "@/components/HealthQuiz";
-import { Calculator, Code2, Megaphone, Banknote, Heart } from "lucide-react";
+import { Unit2Quiz } from "@/components/Unit2Quiz";
+import { Calculator, Code2, Megaphone, Banknote, Heart, Rocket } from "lucide-react";
 
 const Index = () => {
-  const [selectedQuiz, setSelectedQuiz] = useState<'python' | 'math' | 'advertising' | 'banking' | 'health' | null>(null);
+  const [selectedQuiz, setSelectedQuiz] = useState<'python' | 'math' | 'advertising' | 'banking' | 'health' | 'unit2' | null>(null);
 
   if (selectedQuiz === 'python') {
     return <Quiz />;
@@ -31,15 +32,19 @@ const Index = () => {
     return <HealthQuiz />;
   }
 
+  if (selectedQuiz === 'unit2') {
+    return <Unit2Quiz />;
+  }
+
   return (
-    <div className="min-h-screen gradient-background">
+    <div className="min-h-screen space-background">
       <div className="container mx-auto px-4 py-8">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Quiz Platform
+          <h1 className="text-4xl md:text-5xl font-bold text-primary-foreground mb-6 animate-float">
+            🚀 Space Quiz Platform 🌌
           </h1>
-          <p className="text-xl text-muted-foreground mb-8">
-            Choose your quiz and test your knowledge
+          <p className="text-xl text-primary-foreground/80 mb-8">
+            Choose your quiz and explore the universe of knowledge
           </p>
         </div>
 
@@ -133,23 +138,45 @@ const Index = () => {
             </div>
           </Card>
 
-          {/* Health Quiz Card */}
-          <Card className="gradient-card shadow-medium p-8 hover:shadow-glow transition-all duration-300 hover:scale-105">
+          {/* Health Quiz Card - Unit 1 */}
+          <Card className="space-card shadow-medium p-8 hover:shadow-glow transition-all duration-300 hover:scale-105">
             <div className="text-center space-y-6">
-              <div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center">
+              <div className="w-16 h-16 mx-auto bg-primary/20 rounded-full flex items-center justify-center animate-pulse">
                 <Heart className="w-8 h-8 text-primary" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-foreground mb-3">Health & Wellness</h3>
-                <p className="text-muted-foreground mb-6">
+                <h3 className="text-2xl font-bold text-primary-foreground mb-3">Unit 1: Health & Wellness</h3>
+                <p className="text-primary-foreground/70 mb-6">
                   Test your knowledge on health education, nutrition, wellness concepts, 
                   and mental health awareness with comprehensive questions.
                 </p>
                 <Button 
                   onClick={() => setSelectedQuiz('health')}
-                  className="gradient-primary text-white font-medium px-8 py-3 transition-bounce hover:shadow-glow"
+                  className="space-button font-medium px-8 py-3 transition-bounce hover:shadow-glow"
                 >
-                  Start Health Quiz
+                  Start Unit 1 Quiz
+                </Button>
+              </div>
+            </div>
+          </Card>
+
+          {/* Unit 2 Quiz Card */}
+          <Card className="space-card shadow-medium p-8 hover:shadow-glow transition-all duration-300 hover:scale-105">
+            <div className="text-center space-y-6">
+              <div className="w-16 h-16 mx-auto bg-primary/20 rounded-full flex items-center justify-center animate-pulse">
+                <Rocket className="w-8 h-8 text-primary" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-primary-foreground mb-3">Unit 2: Management of Health</h3>
+                <p className="text-primary-foreground/70 mb-6">
+                  Master nutrition, exercise, chronic disease management, and holistic wellness 
+                  strategies with 60 comprehensive MCQ questions.
+                </p>
+                <Button 
+                  onClick={() => setSelectedQuiz('unit2')}
+                  className="space-button font-medium px-8 py-3 transition-bounce hover:shadow-glow"
+                >
+                  Start Unit 2 Quiz
                 </Button>
               </div>
             </div>
@@ -157,8 +184,8 @@ const Index = () => {
         </div>
 
         <div className="text-center mt-12">
-          <p className="text-muted-foreground">
-            Select a quiz above to begin testing your knowledge
+          <p className="text-primary-foreground/60 animate-pulse">
+            🌟 Select a quiz above to begin your cosmic journey of knowledge 🌟
           </p>
         </div>
       </div>
