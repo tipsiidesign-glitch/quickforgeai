@@ -87,13 +87,13 @@ export const HealthQuiz = () => {
 
   if (quizCompleted) {
     return (
-      <div className="min-h-screen gradient-background">
+      <div className="min-h-screen space-background">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto">
             <Button
               variant="ghost"
               onClick={handleBackToHome}
-              className="mb-6 transition-smooth hover:scale-105"
+              className="mb-6 transition-smooth hover:scale-105 text-card-foreground hover:text-primary"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Quiz Selection
@@ -111,7 +111,7 @@ export const HealthQuiz = () => {
   }
 
   return (
-    <div className="min-h-screen gradient-background">
+    <div className="min-h-screen space-background">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
@@ -119,17 +119,17 @@ export const HealthQuiz = () => {
             <Button
               variant="ghost"
               onClick={handleBackToHome}
-              className="transition-smooth hover:scale-105"
+              className="transition-smooth hover:scale-105 text-card-foreground hover:text-primary"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Quiz Selection
             </Button>
             
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+              <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
                 <Brain className="w-6 h-6 text-primary animate-pulse" />
               </div>
-              <h1 className="text-2xl md:text-3xl font-bold text-foreground">
+              <h1 className="text-2xl md:text-3xl font-bold text-card-foreground">
                 Health & Wellness Quiz
               </h1>
             </div>

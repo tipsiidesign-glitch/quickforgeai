@@ -15,7 +15,7 @@ export const ProgressBar = ({ current, total, score }: ProgressBarProps) => {
       {/* Main Progress */}
       <div className="space-y-2">
         <div className="flex justify-between items-center">
-          <span className="text-sm font-medium text-foreground">
+          <span className="text-sm font-medium text-card-foreground">
             Progress: {current} of {total}
           </span>
           <span className="text-sm text-muted-foreground">

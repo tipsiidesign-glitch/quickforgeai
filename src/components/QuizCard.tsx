@@ -39,18 +39,18 @@ export const QuizCard = ({ question, selectedAnswer, showAnswer, onAnswerSelect 
   };
 
   return (
-    <Card className="gradient-card shadow-medium p-8 animate-in fade-in-50 duration-500">
+    <Card className="space-card shadow-medium p-8 animate-in fade-in-50 duration-500">
       {/* Question Header */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
-          <span className="text-sm font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">
+          <span className="text-sm font-medium text-primary bg-primary/20 px-3 py-1 rounded-full">
             {question.category}
           </span>
           <span className="text-sm text-muted-foreground">
             Question {question.id}
           </span>
         </div>
-        <h2 className="text-xl md:text-2xl font-bold text-foreground leading-relaxed">
+        <h2 className="text-xl md:text-2xl font-bold text-card-foreground leading-relaxed">
           {question.question}
         </h2>
       </div>
@@ -66,10 +66,10 @@ export const QuizCard = ({ question, selectedAnswer, showAnswer, onAnswerSelect 
             disabled={showAnswer}
           >
             <div className="flex items-start gap-3 w-full">
-              <span className="flex-shrink-0 w-8 h-8 rounded-full bg-muted text-muted-foreground text-sm font-medium flex items-center justify-center mt-1">
+              <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/20 text-muted-foreground text-sm font-medium flex items-center justify-center mt-1">
                 {String.fromCharCode(65 + index)}
               </span>
-              <span className="text-foreground flex-1 text-left leading-relaxed">
+              <span className="text-card-foreground flex-1 text-left leading-relaxed">
                 {option}
               </span>
               {getOptionIcon(index)}

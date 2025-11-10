@@ -66,7 +66,7 @@ export const BankingQuiz = () => {
 
   if (quizCompleted) {
     return (
-      <div className="min-h-screen gradient-background">
+      <div className="min-h-screen space-background">
         <div className="container mx-auto px-4 py-8">
           <QuizResults
             score={score}
@@ -78,7 +78,7 @@ export const BankingQuiz = () => {
             <Button
               onClick={handleBackToHome}
               variant="outline"
-              className="transition-smooth"
+              className="transition-smooth text-card-foreground hover:text-primary"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Quiz Selection
@@ -90,15 +90,15 @@ export const BankingQuiz = () => {
   }
 
   return (
-    <div className="min-h-screen gradient-background">
+    <div className="min-h-screen space-background">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+            <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
               <Banknote className="w-6 h-6 text-primary" />
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground">
+            <h1 className="text-3xl md:text-4xl font-bold text-card-foreground">
               Banking & Finance Quiz
             </h1>
           </div>
@@ -109,7 +109,7 @@ export const BankingQuiz = () => {
           <Button
             onClick={handleBackToHome}
             variant="ghost"
-            className="mt-4 text-muted-foreground hover:text-foreground transition-smooth"
+            className="mt-4 text-muted-foreground hover:text-primary transition-smooth"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Quiz Selection

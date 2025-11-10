@@ -115,7 +115,7 @@ export const Unit2Quiz = () => {
             <Button
               variant="ghost"
               onClick={handleBackToHome}
-              className="mb-6 transition-smooth hover:scale-105 text-primary-foreground"
+              className="mb-6 transition-smooth hover:scale-105 text-card-foreground hover:text-primary"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Quiz Selection
@@ -141,7 +141,7 @@ export const Unit2Quiz = () => {
             <Button
               variant="ghost"
               onClick={handleBackToHome}
-              className="transition-smooth hover:scale-105 text-primary-foreground"
+              className="transition-smooth hover:scale-105 text-card-foreground hover:text-primary"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Quiz Selection
@@ -151,7 +151,7 @@ export const Unit2Quiz = () => {
               <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
                 <Rocket className="w-6 h-6 text-primary animate-pulse" />
               </div>
-              <h1 className="text-2xl md:text-3xl font-bold text-primary-foreground">
+              <h1 className="text-2xl md:text-3xl font-bold text-card-foreground">
                 Unit 2: Management of Health & Wellness
               </h1>
             </div>

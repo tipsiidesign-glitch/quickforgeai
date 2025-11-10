@@ -30,37 +30,37 @@ export const QuizResults = ({ score, total, onRestart }: QuizResultsProps) => {
   const { grade, color, icon: Icon } = getGrade();
 
   return (
-    <div className="min-h-screen gradient-background flex items-center justify-center p-4">
-      <Card className="gradient-card shadow-large p-8 w-full max-w-2xl text-center animate-in zoom-in-50 duration-700">
+    <div className="min-h-screen space-background flex items-center justify-center p-4">
+      <Card className="space-card shadow-large p-8 w-full max-w-2xl text-center animate-in zoom-in-50 duration-700">
         {/* Trophy Icon */}
         <div className="mb-8">
-          <div className="w-24 h-24 mx-auto bg-primary/10 rounded-full flex items-center justify-center">
+          <div className="w-24 h-24 mx-auto bg-primary/20 rounded-full flex items-center justify-center">
             <Icon className={`w-12 h-12 ${color}`} />
           </div>
         </div>
 
         {/* Results */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-4">
+          <h1 className="text-4xl font-bold text-card-foreground mb-4">
             Quiz Complete!
           </h1>
           <div className="space-y-4">
-            <div className="text-6xl font-bold gradient-primary bg-clip-text text-transparent">
+            <div className="text-6xl font-bold text-primary">
               {percentage}%
             </div>
-            <div className="text-2xl font-semibold text-foreground">
+            <div className="text-2xl font-semibold text-card-foreground">
               Grade: <span className={color}>{grade}</span>
             </div>
             <p className="text-lg text-muted-foreground">
               You got <span className="font-bold text-success">{score}</span> out of{" "}
-              <span className="font-bold text-foreground">{total}</span> questions correct
+              <span className="font-bold text-card-foreground">{total}</span> questions correct
             </p>
           </div>
         </div>
 
         {/* Encouragement */}
-        <div className="mb-8 p-6 bg-muted/30 rounded-lg">
-          <p className="text-lg font-medium text-foreground">
+        <div className="mb-8 p-6 bg-primary/10 rounded-lg">
+          <p className="text-lg font-medium text-card-foreground">
             {getEncouragement()}
           </p>
         </div>
@@ -97,7 +97,7 @@ export const QuizResults = ({ score, total, onRestart }: QuizResultsProps) => {
         <Button 
           onClick={onRestart}
           size="lg"
-          className="gradient-primary text-white font-semibold px-8 py-3 transition-bounce hover:shadow-glow"
+          className="space-button font-semibold px-8 py-3 transition-bounce"
         >
           <RotateCcw className="w-5 h-5 mr-2" />
           Take Quiz Again
