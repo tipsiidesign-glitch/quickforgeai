@@ -40,10 +40,10 @@ const Index = () => {
     <div className="min-h-screen space-background">
       <div className="container mx-auto px-4 py-8">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-primary-foreground mb-6 animate-float">
-            🚀 Space Quiz Platform 🌌
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 animate-float">
+            🚀 FYAI Learn 🌌
           </h1>
-          <p className="text-xl text-primary-foreground/80 mb-8">
+          <p className="text-xl text-muted-foreground mb-8">
             Choose your quiz and explore the universe of knowledge
           </p>
         </div>
@@ -51,20 +51,20 @@ const Index = () => {
         {/* Quiz Selection Cards */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 max-w-7xl mx-auto">
           {/* Python Quiz Card */}
-          <Card className="gradient-card shadow-medium p-8 hover:shadow-glow transition-all duration-300 hover:scale-105">
+          <Card className="space-card shadow-medium p-8 hover:shadow-glow transition-all duration-300 hover:scale-105">
             <div className="text-center space-y-6">
-              <div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center">
+              <div className="w-16 h-16 mx-auto bg-primary/20 rounded-full flex items-center justify-center">
                 <Code2 className="w-8 h-8 text-primary" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-foreground mb-3">Python Programming</h3>
+                <h3 className="text-2xl font-bold text-card-foreground mb-3">Python Programming</h3>
                 <p className="text-muted-foreground mb-6">
                   Test your Python knowledge with comprehensive questions covering data types, 
                   control flow, functions, and advanced concepts.
                 </p>
                 <Button 
                   onClick={() => setSelectedQuiz('python')}
-                  className="gradient-primary text-white font-medium px-8 py-3 transition-bounce hover:shadow-glow"
+                  className="space-button font-medium px-8 py-3 transition-bounce"
                 >
                   Start Python Quiz
                 </Button>
@@ -73,20 +73,20 @@ const Index = () => {
           </Card>
 
           {/* Math Quiz Card */}
-          <Card className="gradient-card shadow-medium p-8 hover:shadow-glow transition-all duration-300 hover:scale-105">
+          <Card className="space-card shadow-medium p-8 hover:shadow-glow transition-all duration-300 hover:scale-105">
             <div className="text-center space-y-6">
-              <div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center">
+              <div className="w-16 h-16 mx-auto bg-primary/20 rounded-full flex items-center justify-center">
                 <Calculator className="w-8 h-8 text-primary" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-foreground mb-3">Mathematics & Statistics</h3>
+                <h3 className="text-2xl font-bold text-card-foreground mb-3">Mathematics & Statistics</h3>
                 <p className="text-muted-foreground mb-6">
                   Challenge yourself with questions on statistics, probability, 
                   data types, and calculus concepts.
                 </p>
                 <Button 
                   onClick={() => setSelectedQuiz('math')}
-                  className="gradient-primary text-white font-medium px-8 py-3 transition-bounce hover:shadow-glow"
+                  className="space-button font-medium px-8 py-3 transition-bounce"
                 >
                   Start Math Quiz
                 </Button>
@@ -95,20 +95,20 @@ const Index = () => {
           </Card>
 
           {/* Advertising Quiz Card */}
-          <Card className="gradient-card shadow-medium p-8 hover:shadow-glow transition-all duration-300 hover:scale-105">
+          <Card className="space-card shadow-medium p-8 hover:shadow-glow transition-all duration-300 hover:scale-105">
             <div className="text-center space-y-6">
-              <div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center">
+              <div className="w-16 h-16 mx-auto bg-primary/20 rounded-full flex items-center justify-center">
                 <Megaphone className="w-8 h-8 text-primary" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-foreground mb-3">Advertising & Marketing</h3>
+                <h3 className="text-2xl font-bold text-card-foreground mb-3">Advertising & Marketing</h3>
                 <p className="text-muted-foreground mb-6">
                   Master advertising concepts including media planning, communication, 
                   types of advertising, and career insights.
                 </p>
                 <Button 
                   onClick={() => setSelectedQuiz('advertising')}
-                  className="gradient-primary text-white font-medium px-8 py-3 transition-bounce hover:shadow-glow"
+                  className="space-button font-medium px-8 py-3 transition-bounce"
                 >
                   Start Advertising Quiz
                 </Button>
@@ -117,20 +117,20 @@ const Index = () => {
           </Card>
 
           {/* Banking Quiz Card */}
-          <Card className="gradient-card shadow-medium p-8 hover:shadow-glow transition-all duration-300 hover:scale-105">
+          <Card className="space-card shadow-medium p-8 hover:shadow-glow transition-all duration-300 hover:scale-105">
             <div className="text-center space-y-6">
-              <div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center">
+              <div className="w-16 h-16 mx-auto bg-primary/20 rounded-full flex items-center justify-center">
                 <Banknote className="w-8 h-8 text-primary" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-foreground mb-3">Banking & Finance</h3>
+                <h3 className="text-2xl font-bold text-card-foreground mb-3">Banking & Finance</h3>
                 <p className="text-muted-foreground mb-6">
                   Master banking concepts including payment systems, cheques, cards, 
                   and financial instruments with detailed explanations.
                 </p>
                 <Button 
                   onClick={() => setSelectedQuiz('banking')}
-                  className="gradient-primary text-white font-medium px-8 py-3 transition-bounce hover:shadow-glow"
+                  className="space-button font-medium px-8 py-3 transition-bounce"
                 >
                   Start Banking Quiz
                 </Button>
@@ -145,14 +145,14 @@ const Index = () => {
                 <Heart className="w-8 h-8 text-primary" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-primary-foreground mb-3">Unit 1: Health & Wellness</h3>
-                <p className="text-primary-foreground/70 mb-6">
+                <h3 className="text-2xl font-bold text-card-foreground mb-3">Unit 1: Health & Wellness</h3>
+                <p className="text-muted-foreground mb-6">
                   Test your knowledge on health education, nutrition, wellness concepts, 
                   and mental health awareness with comprehensive questions.
                 </p>
                 <Button 
                   onClick={() => setSelectedQuiz('health')}
-                  className="space-button font-medium px-8 py-3 transition-bounce hover:shadow-glow"
+                  className="space-button font-medium px-8 py-3 transition-bounce"
                 >
                   Start Unit 1 Quiz
                 </Button>
@@ -167,14 +167,14 @@ const Index = () => {
                 <Rocket className="w-8 h-8 text-primary" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-primary-foreground mb-3">Unit 2: Management of Health</h3>
-                <p className="text-primary-foreground/70 mb-6">
+                <h3 className="text-2xl font-bold text-card-foreground mb-3">Unit 2: Management of Health</h3>
+                <p className="text-muted-foreground mb-6">
                   Master nutrition, exercise, chronic disease management, and holistic wellness 
                   strategies with 60 comprehensive MCQ questions.
                 </p>
                 <Button 
                   onClick={() => setSelectedQuiz('unit2')}
-                  className="space-button font-medium px-8 py-3 transition-bounce hover:shadow-glow"
+                  className="space-button font-medium px-8 py-3 transition-bounce"
                 >
                   Start Unit 2 Quiz
                 </Button>
@@ -184,7 +184,7 @@ const Index = () => {
         </div>
 
         <div className="text-center mt-12">
-          <p className="text-primary-foreground/60 animate-pulse">
+          <p className="text-muted-foreground animate-pulse">
             🌟 Select a quiz above to begin your cosmic journey of knowledge 🌟
           </p>
         </div>
