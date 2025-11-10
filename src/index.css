@@ -1,0 +1,376 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Python Quiz Design System - Modern, Professional Theme */
+
+@layer base {
+  :root {
+    /* Core Background & Text */
+    --background: 220 26% 97%;
+    --foreground: 220 26% 15%;
+
+    /* Cards & Surfaces */
+    --card: 0 0% 100%;
+    --card-foreground: 220 26% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 26% 15%;
+
+    /* Primary - Python Blue Theme */
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 217 91% 75%;
+
+    /* Secondary - Soft Blue */
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 220 26% 15%;
+
+    /* Muted Elements */
+    --muted: 220 13% 95%;
+    --muted-foreground: 220 13% 45%;
+
+    /* Accent - Success Green */
+    --accent: 142 76% 36%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Quiz Specific Colors */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    --warning: 45 93% 47%;
+    --warning-foreground: 0 0% 100%;
+    --error: 0 84% 60%;
+    --error-foreground: 0 0% 100%;
+
+    /* Interactive Elements */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 217 91% 60%;
+
+    /* Design System Extensions */
+    --radius: 0.75rem;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-background: linear-gradient(180deg, hsl(var(--background)), hsl(220 26% 94%));
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(220 13% 98%));
+    
+    /* Shadows */
+    --shadow-soft: 0 4px 6px -1px hsl(220 26% 15% / 0.1), 0 2px 4px -1px hsl(220 26% 15% / 0.06);
+    --shadow-medium: 0 10px 15px -3px hsl(220 26% 15% / 0.1), 0 4px 6px -2px hsl(220 26% 15% / 0.05);
+    --shadow-large: 0 25px 50px -12px hsl(220 26% 15% / 0.25);
+    --shadow-glow: 0 0 40px hsl(var(--primary) / 0.3);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Core Background & Text */
+    --background: 220 26% 10%;
+    --foreground: 220 26% 95%;
+
+    /* Cards & Surfaces */
+    --card: 220 26% 12%;
+    --card-foreground: 220 26% 95%;
+
+    --popover: 220 26% 12%;
+    --popover-foreground: 220 26% 95%;
+
+    /* Primary - Bright Blue for Dark Mode */
+    --primary: 217 91% 65%;
+    --primary-foreground: 220 26% 10%;
+    --primary-glow: 217 91% 80%;
+
+    /* Secondary - Dark Blue */
+    --secondary: 220 26% 18%;
+    --secondary-foreground: 220 26% 95%;
+
+    /* Muted Elements */
+    --muted: 220 26% 15%;
+    --muted-foreground: 220 13% 65%;
+
+    /* Accent - Success Green */
+    --accent: 142 76% 45%;
+    --accent-foreground: 220 26% 10%;
+
+    /* Quiz Specific Colors */
+    --success: 142 76% 45%;
+    --success-foreground: 220 26% 10%;
+    --warning: 45 93% 55%;
+    --warning-foreground: 220 26% 10%;
+    --error: 0 84% 65%;
+    --error-foreground: 220 26% 10%;
+
+    /* Interactive Elements */
+    --destructive: 0 84% 65%;
+    --destructive-foreground: 220 26% 10%;
+
+    --border: 220 26% 18%;
+    --input: 220 26% 18%;
+    --ring: 217 91% 65%;
+
+    /* Sidebar (keeping existing) */
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    background: hsl(var(--background));
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .gradient-background {
+    background: var(--gradient-background);
+  }
+  
+  .gradient-card {
+    background: var(--gradient-card);
+  }
+  
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .shadow-medium {
+    box-shadow: var(--shadow-medium);
+  }
+  
+  .shadow-large {
+    box-shadow: var(--shadow-large);
+  }
+  
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+  
+  .transition-bounce {
+    transition: var(--transition-bounce);
+  }
+  
+  .quiz-option {
+    @apply transition-smooth border-2 border-border bg-card hover:border-primary/50 hover:bg-primary/5 rounded-lg p-4 cursor-pointer;
+  }
+  
+  .quiz-option-selected {
+    @apply border-primary bg-primary/10;
+  }
+  
+  .quiz-option-correct {
+    @apply border-accent bg-accent/10;
+  }
+  
+  .quiz-option-incorrect {
+    @apply border-destructive bg-destructive/10;
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+  }
+
+  @keyframes bounceIn {
+    0% {
+      transform: scale(0.3);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    70% {
+      transform: scale(0.9);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes glow {
+    from {
+      box-shadow: 0 0 20px -10px hsl(var(--primary));
+    }
+    to {
+      box-shadow: 0 0 30px -5px hsl(var(--primary)), 0 0 40px -10px hsl(var(--primary));
+    }
+  }
+  
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+  
+  @keyframes slideUp {
+    from {
+      transform: translateY(30px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes zoomIn {
+    from {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeSlide {
+    from {
+      transform: translateX(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-shake {
+    animation: shake 0.6s ease-in-out;
+  }
+  
+  .animate-bounce-in {
+    animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+  }
+  
+  .animate-zoom-in {
+    animation: zoomIn 0.5s ease-out forwards;
+  }
+  
+  .animate-fade-slide {
+    animation: fadeSlide 0.8s ease-out forwards;
+  }
+
+  /* Health Quiz Specific Animations */
+  @keyframes pulse-success {
+    0%, 100% {
+      transform: scale(1);
+      background-color: hsl(var(--success) / 0.1);
+    }
+    50% {
+      transform: scale(1.05);
+      background-color: hsl(var(--success) / 0.2);
+    }
+  }
+
+  @keyframes heartbeat {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+  }
+
+  @keyframes sparkle {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+    50% {
+      opacity: 0.7;
+      transform: scale(1.2) rotate(180deg);
+    }
+  }
+
+  @keyframes wave {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  /* Health Quiz Animation Classes */
+  .pulse-success {
+    animation: pulse-success 0.6s ease-out;
+  }
+
+  .shake-error {
+    animation: shake 0.5s ease-out;
+  }
+
+  .heartbeat {
+    animation: heartbeat 1.5s ease-in-out infinite;
+  }
+
+  .sparkle {
+    animation: sparkle 2s ease-in-out infinite;
+  }
+
+  .wave {
+    animation: wave 2s ease-in-out infinite;
+  }
+}
