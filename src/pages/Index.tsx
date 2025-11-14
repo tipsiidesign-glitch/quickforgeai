@@ -7,10 +7,11 @@ import { AdvertisingQuiz } from "@/components/AdvertisingQuiz";
 import { BankingQuiz } from "@/components/BankingQuiz";
 import { HealthQuiz } from "@/components/HealthQuiz";
 import { Unit2Quiz } from "@/components/Unit2Quiz";
+import { IKSQuiz } from "@/components/IKSQuiz";
 import { Calculator, Code2, Megaphone, Banknote, Heart, Rocket } from "lucide-react";
 
 const Index = () => {
-  const [selectedQuiz, setSelectedQuiz] = useState<'python' | 'math' | 'advertising' | 'banking' | 'health' | 'unit2' | null>(null);
+  const [selectedQuiz, setSelectedQuiz] = useState<'python' | 'math' | 'advertising' | 'banking' | 'health' | 'unit2' | 'iks' | null>(null);
 
   if (selectedQuiz === 'python') {
     return <Quiz />;
@@ -34,6 +35,10 @@ const Index = () => {
 
   if (selectedQuiz === 'unit2') {
     return <Unit2Quiz />;
+  }
+
+  if (selectedQuiz === 'iks') {
+    return <IKSQuiz />;
   }
 
   return (
@@ -177,6 +182,28 @@ const Index = () => {
                   className="space-button font-medium px-8 py-3 transition-bounce"
                 >
                   Start Unit 2 Quiz
+                </Button>
+              </div>
+            </div>
+          </Card>
+
+          {/* IKS Quiz Card */}
+          <Card className="space-card shadow-medium p-8 hover:shadow-glow transition-all duration-300 hover:scale-105">
+            <div className="text-center space-y-6">
+              <div className="w-16 h-16 mx-auto bg-primary/20 rounded-full flex items-center justify-center animate-pulse">
+                <Rocket className="w-8 h-8 text-primary" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-card-foreground mb-3">SEM 1 IKS MCQ</h3>
+                <p className="text-muted-foreground mb-6">
+                  Test your knowledge of Indian Knowledge Systems including Ayurveda, Alchemy, 
+                  Mathematics, Philosophy, Architecture, and Trade with 60 comprehensive questions.
+                </p>
+                <Button 
+                  onClick={() => setSelectedQuiz('iks')}
+                  className="space-button font-medium px-8 py-3 transition-bounce"
+                >
+                  Start IKS Quiz
                 </Button>
               </div>
             </div>
