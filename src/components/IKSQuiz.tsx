@@ -204,13 +204,23 @@ export const IKSQuiz = () => {
   return (
     <div className="min-h-screen space-background">
       <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-card-foreground mb-4">
-            SEM 1 IKS MCQ
-          </h1>
-          <p className="text-lg text-muted-foreground mb-6">
-            Test your knowledge with {shuffledQuestions.length} comprehensive questions
-          </p>
+        <div className="mb-8">
+          <Button
+            variant="outline"
+            onClick={() => navigate("/")}
+            className="mb-4 text-card-foreground hover:text-primary"
+          >
+            <ChevronLeft className="w-4 h-4 mr-2" />
+            Back to Quiz Selection
+          </Button>
+          <div className="text-center">
+            <h1 className="text-3xl md:text-4xl font-bold text-card-foreground mb-4">
+              SEM 1 IKS MCQ
+            </h1>
+            <p className="text-lg text-muted-foreground mb-6">
+              Test your knowledge with {shuffledQuestions.length} comprehensive questions
+            </p>
+          </div>
           
           <div className="max-w-2xl mx-auto mb-8">
             <div className="w-full space-y-4">
