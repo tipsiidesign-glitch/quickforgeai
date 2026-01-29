@@ -1,6 +1,7 @@
 import { QuizQuestion } from "@/data/quizQuestions";
 import { MathQuestion } from "@/data/mathQuestions";
 import { AdvertisingQuestion } from "@/data/advertisingQuestions";
+import { AdvertisementOE2Question } from "@/data/advertisementOE2Questions";
 import { BankingQuestion } from "@/data/bankingQuestions";
 import { HealthQuestion } from "@/data/healthQuestions";
 import { Unit2Question } from "@/data/unit2Questions";
@@ -150,6 +151,28 @@ export const shuffleUnit2Questions = (questions: Unit2Question[]): Unit2Question
 
 // Shuffle IKS questions and their options while maintaining correct answer tracking  
 export const shuffleIKSQuestions = (questions: IKSQuestion[]): IKSQuestion[] => {
+  const shuffledQuestions = shuffleArray(questions);
+  
+  return shuffledQuestions.map(question => {
+    const originalOptions = [...question.options];
+    const correctOption = originalOptions[question.correctAnswer];
+    
+    // Shuffle options
+    const shuffledOptions = shuffleArray(originalOptions);
+    
+    // Find new index of correct answer
+    const newCorrectAnswer = shuffledOptions.indexOf(correctOption);
+    
+    return {
+      ...question,
+      options: shuffledOptions,
+      correctAnswer: newCorrectAnswer
+    };
+  });
+};
+
+// Shuffle Advertisement OE2 questions and their options while maintaining correct answer tracking  
+export const shuffleAdvertisementOE2Questions = (questions: AdvertisementOE2Question[]): AdvertisementOE2Question[] => {
   const shuffledQuestions = shuffleArray(questions);
   
   return shuffledQuestions.map(question => {
