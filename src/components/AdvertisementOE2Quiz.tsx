@@ -1,5 +1,4 @@
 import { useState, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
 import { QuizCard } from "./QuizCard";
 import { ProgressBar } from "./ProgressBar";
 import { QuizNavigation } from "./QuizNavigation";
@@ -9,9 +8,11 @@ import { advertisementOE2Questions } from "@/data/advertisementOE2Questions";
 import { shuffleAdvertisementOE2Questions } from "@/lib/shuffleUtils";
 import { ChevronLeft } from "lucide-react";
 
-export const AdvertisementOE2Quiz = () => {
-  const navigate = useNavigate();
-  
+interface AdvertisementOE2QuizProps {
+  onBack?: () => void;
+}
+
+export const AdvertisementOE2Quiz = ({ onBack }: AdvertisementOE2QuizProps) => {
   // Shuffle questions and options once when component mounts
   const shuffledQuestions = useMemo(() => shuffleAdvertisementOE2Questions(advertisementOE2Questions), []);
   
@@ -87,7 +88,7 @@ export const AdvertisementOE2Quiz = () => {
         <div className="mb-8">
           <Button
             variant="outline"
-            onClick={() => navigate("/")}
+            onClick={onBack}
             className="mb-4 text-card-foreground hover:text-primary"
           >
             <ChevronLeft className="w-4 h-4 mr-2" />

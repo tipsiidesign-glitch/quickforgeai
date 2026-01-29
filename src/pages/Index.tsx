@@ -28,7 +28,7 @@ const Index = () => {
   }
 
   if (selectedQuiz === 'advertisementOE2') {
-    return <AdvertisementOE2Quiz />;
+    return <AdvertisementOE2Quiz onBack={() => setSelectedQuiz(null)} />;
   }
 
   if (selectedQuiz === 'banking') {
