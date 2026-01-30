@@ -5,10 +5,13 @@ import { Progress } from "@/components/ui/progress";
 import { CheckCircle, XCircle, ChevronLeft, ChevronRight, Check, RotateCcw, Trophy, Award, Target } from "lucide-react";
 import { iksQuestions } from "@/data/iksQuestions";
 import { shuffleIKSQuestions } from "@/lib/shuffleUtils";
+import { useQuizAudio } from "@/hooks/useQuizAudio";
 import { useNavigate } from "react-router-dom";
 
 export const IKSQuiz = () => {
   const navigate = useNavigate();
+  const { playCorrectSound, playWrongSound } = useQuizAudio();
+  
   const shuffledQuestions = useMemo(() => shuffleIKSQuestions(iksQuestions), []);
   
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -39,6 +42,9 @@ export const IKSQuiz = () => {
     
     if (selectedAnswer === currentQuestion.correctAnswer) {
       setScore(prev => prev + 1);
+      playCorrectSound();
+    } else {
+      playWrongSound();
     }
   };
 
