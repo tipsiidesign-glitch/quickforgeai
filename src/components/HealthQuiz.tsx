@@ -6,10 +6,13 @@ import { ProgressBar } from "./ProgressBar";
 import { QuizNavigation } from "./QuizNavigation";
 import { healthQuestions } from "@/data/healthQuestions";
 import { shuffleHealthQuestions } from "@/lib/shuffleUtils";
+import { useQuizAudio } from "@/hooks/useQuizAudio";
 import { ArrowLeft, Brain } from "lucide-react";
 import { toast } from "sonner";
 
 export const HealthQuiz = () => {
+  const { playCorrectSound, playWrongSound } = useQuizAudio();
+  
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -35,10 +38,12 @@ export const HealthQuiz = () => {
       
       if (isCorrect) {
         setScore(score + 1);
+        playCorrectSound();
         toast.success("Correct! Well done! 🎉", {
           duration: 2000,
         });
       } else {
+        playWrongSound();
         toast.error("Incorrect. Keep learning! 📚", {
           duration: 2000,
         });

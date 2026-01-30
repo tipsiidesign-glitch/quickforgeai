@@ -6,6 +6,7 @@ import { QuizResults } from "./QuizResults";
 import { Button } from "./ui/button";
 import { advertisementOE2Questions } from "@/data/advertisementOE2Questions";
 import { shuffleAdvertisementOE2Questions } from "@/lib/shuffleUtils";
+import { useQuizAudio } from "@/hooks/useQuizAudio";
 import { ChevronLeft } from "lucide-react";
 
 interface AdvertisementOE2QuizProps {
@@ -13,6 +14,8 @@ interface AdvertisementOE2QuizProps {
 }
 
 export const AdvertisementOE2Quiz = ({ onBack }: AdvertisementOE2QuizProps) => {
+  const { playCorrectSound, playWrongSound } = useQuizAudio();
+  
   // Shuffle questions and options once when component mounts
   const shuffledQuestions = useMemo(() => shuffleAdvertisementOE2Questions(advertisementOE2Questions), []);
   
@@ -43,6 +46,9 @@ export const AdvertisementOE2Quiz = ({ onBack }: AdvertisementOE2QuizProps) => {
     // Update score if answer is correct
     if (selectedAnswer === currentQuestion.correctAnswer) {
       setScore(prev => prev + 1);
+      playCorrectSound();
+    } else {
+      playWrongSound();
     }
   };
 

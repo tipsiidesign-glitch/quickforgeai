@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { bankingQuestions } from "@/data/bankingQuestions";
@@ -7,9 +7,12 @@ import { QuizCard } from "@/components/QuizCard";
 import { ProgressBar } from "@/components/ProgressBar";
 import { QuizNavigation } from "@/components/QuizNavigation";
 import { QuizResults } from "@/components/QuizResults";
+import { useQuizAudio } from "@/hooks/useQuizAudio";
 import { ArrowLeft, Banknote } from "lucide-react";
 
 export const BankingQuiz = () => {
+  const { playCorrectSound, playWrongSound } = useQuizAudio();
+  
   const [questions] = useState(() => shuffleBankingQuestions(bankingQuestions));
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -29,6 +32,9 @@ export const BankingQuiz = () => {
     
     if (selectedAnswer === questions[currentQuestion].correctAnswer) {
       setScore(score + 1);
+      playCorrectSound();
+    } else {
+      playWrongSound();
     }
   };
 

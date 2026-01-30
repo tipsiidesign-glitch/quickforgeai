@@ -5,8 +5,11 @@ import { QuizNavigation } from "./QuizNavigation";
 import { QuizResults } from "./QuizResults";
 import { mathQuestions } from "@/data/mathQuestions";
 import { shuffleMathQuestions } from "@/lib/shuffleUtils";
+import { useQuizAudio } from "@/hooks/useQuizAudio";
 
 export const MathQuiz = () => {
+  const { playCorrectSound, playWrongSound } = useQuizAudio();
+  
   // Shuffle questions and options once when component mounts
   const shuffledQuestions = useMemo(() => shuffleMathQuestions(mathQuestions), []);
   
@@ -37,6 +40,9 @@ export const MathQuiz = () => {
     // Update score if answer is correct
     if (selectedAnswer === currentQuestion.correctAnswer) {
       setScore(prev => prev + 1);
+      playCorrectSound();
+    } else {
+      playWrongSound();
     }
   };
 
