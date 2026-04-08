@@ -7,6 +7,7 @@ import { MathQuiz } from "@/components/MathQuiz";
 import { AdvertisingQuiz } from "@/components/AdvertisingQuiz";
 import { AdvertisementOE2Quiz } from "@/components/AdvertisementOE2Quiz";
 import { CCHealthQuiz } from "@/components/CCHealthQuiz";
+import { FinalExamHealthQuiz } from "@/components/FinalExamHealthQuiz";
 import { BankingQuiz } from "@/components/BankingQuiz";
 import { HealthQuiz } from "@/components/HealthQuiz";
 import { Unit2Quiz } from "@/components/Unit2Quiz";

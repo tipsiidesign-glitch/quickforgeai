@@ -5,6 +5,7 @@ import { QuizNavigation } from "./QuizNavigation";
 import { QuizResults } from "./QuizResults";
 import { Button } from "./ui/button";
 import { finalExamHealthQuestions } from "@/data/finalExamHealthQuestions";
+import type { QuizQuestion } from "@/data/quizQuestions";
 import { shuffleArray } from "@/lib/shuffleUtils";
 import { useQuizAudio } from "@/hooks/useQuizAudio";
 import { ChevronLeft, GraduationCap } from "lucide-react";
