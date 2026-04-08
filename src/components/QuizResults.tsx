@@ -1,6 +1,8 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Trophy, Award, Target, RotateCcw } from "lucide-react";
+import instagramProfile from "@/assets/instagram-profile.png";
+import instagramQR from "@/assets/instagram-qr.png";
 
 interface QuizResultsProps {
   score: number;
@@ -20,10 +22,10 @@ export const QuizResults = ({ score, total, onRestart }: QuizResultsProps) => {
   };
 
   const getEncouragement = () => {
-    if (percentage >= 90) return "Outstanding! You're a Python expert! 🐍";
-    if (percentage >= 80) return "Excellent work! You have a strong grasp of Python!";
-    if (percentage >= 70) return "Great job! You're well on your way to mastering Python!";
-    if (percentage >= 60) return "Good effort! Keep practicing to improve your Python skills!";
+    if (percentage >= 90) return "Outstanding! You're a quiz master! 🏆";
+    if (percentage >= 80) return "Excellent work! You have a strong grasp!";
+    if (percentage >= 70) return "Great job! You're well on your way!";
+    if (percentage >= 60) return "Good effort! Keep practicing to improve!";
     return "Don't give up! Review the concepts and try again!";
   };
 
@@ -32,6 +34,36 @@ export const QuizResults = ({ score, total, onRestart }: QuizResultsProps) => {
   return (
     <div className="min-h-screen space-background flex items-center justify-center p-4">
       <Card className="space-card shadow-large p-8 w-full max-w-2xl text-center animate-in zoom-in-50 duration-700">
+        
+        {/* Instagram Support Section */}
+        <div className="mb-8 p-6 rounded-xl bg-card/80 border border-primary/20">
+          <p className="text-lg font-semibold text-card-foreground mb-4">
+            I supported you—now it's your turn to Support Me💕
+          </p>
+          <img
+            src={instagramProfile}
+            alt="tipsii.ai Instagram Profile"
+            className="mx-auto rounded-lg mb-4 max-w-full"
+          />
+          <p className="text-xl font-bold mb-4">
+            <span className="text-cyan-400">Follow</span>{" "}
+            <span className="text-card-foreground">For More</span>
+          </p>
+          <img
+            src={instagramQR}
+            alt="tipsii.ai QR Code"
+            className="mx-auto rounded-lg mb-4 w-48 h-48 object-contain"
+          />
+          <a
+            href="https://www.instagram.com/tipsii.ai?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block text-cyan-400 hover:text-cyan-300 underline font-medium transition-colors"
+          >
+            @tipsii.ai - Follow on Instagram
+          </a>
+        </div>
+
         {/* Trophy Icon */}
         <div className="mb-8">
           <div className="w-24 h-24 mx-auto bg-primary/20 rounded-full flex items-center justify-center">
@@ -68,28 +100,16 @@ export const QuizResults = ({ score, total, onRestart }: QuizResultsProps) => {
         {/* Stats Breakdown */}
         <div className="grid grid-cols-3 gap-4 mb-8">
           <div className="text-center">
-            <div className="text-2xl font-bold text-success">
-              {score}
-            </div>
-            <div className="text-sm text-muted-foreground">
-              Correct
-            </div>
+            <div className="text-2xl font-bold text-success">{score}</div>
+            <div className="text-sm text-muted-foreground">Correct</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-destructive">
-              {total - score}
-            </div>
-            <div className="text-sm text-muted-foreground">
-              Wrong
-            </div>
+            <div className="text-2xl font-bold text-destructive">{total - score}</div>
+            <div className="text-sm text-muted-foreground">Wrong</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-primary">
-              {percentage}%
-            </div>
-            <div className="text-sm text-muted-foreground">
-              Accuracy
-            </div>
+            <div className="text-2xl font-bold text-primary">{percentage}%</div>
+            <div className="text-sm text-muted-foreground">Accuracy</div>
           </div>
         </div>
 
