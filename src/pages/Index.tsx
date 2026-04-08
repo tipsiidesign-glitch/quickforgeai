@@ -40,7 +40,6 @@ const Index = () => {
   if (selectedQuiz === 'finalExamHealth') {
     return <FinalExamHealthQuiz onBack={() => setSelectedQuiz(null)} />;
   }
-  }
 
   if (selectedQuiz === 'banking') {
     return <BankingQuiz />;
