@@ -15,7 +15,7 @@ import { IKSQuiz } from "@/components/IKSQuiz";
 import { Calculator, Code2, Megaphone, Banknote, Heart, Rocket, BookOpen } from "lucide-react";
 
 const Index = () => {
-  const [selectedQuiz, setSelectedQuiz] = useState<'python' | 'math' | 'advertising' | 'advertisementOE2' | 'ccHealth' | 'banking' | 'health' | 'unit2' | 'iks' | null>(null);
+  const [selectedQuiz, setSelectedQuiz] = useState<'python' | 'math' | 'advertising' | 'advertisementOE2' | 'ccHealth' | 'finalExamHealth' | 'banking' | 'health' | 'unit2' | 'iks' | null>(null);
 
   if (selectedQuiz === 'python') {
     return <Quiz />;
