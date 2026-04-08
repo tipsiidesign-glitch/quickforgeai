@@ -7,14 +7,15 @@ import { MathQuiz } from "@/components/MathQuiz";
 import { AdvertisingQuiz } from "@/components/AdvertisingQuiz";
 import { AdvertisementOE2Quiz } from "@/components/AdvertisementOE2Quiz";
 import { CCHealthQuiz } from "@/components/CCHealthQuiz";
+import { FinalExamHealthQuiz } from "@/components/FinalExamHealthQuiz";
 import { BankingQuiz } from "@/components/BankingQuiz";
 import { HealthQuiz } from "@/components/HealthQuiz";
 import { Unit2Quiz } from "@/components/Unit2Quiz";
 import { IKSQuiz } from "@/components/IKSQuiz";
-import { Calculator, Code2, Megaphone, Banknote, Heart, Rocket, BookOpen } from "lucide-react";
+import { Calculator, Code2, Megaphone, Banknote, Heart, Rocket, BookOpen, GraduationCap } from "lucide-react";
 
 const Index = () => {
-  const [selectedQuiz, setSelectedQuiz] = useState<'python' | 'math' | 'advertising' | 'advertisementOE2' | 'ccHealth' | 'banking' | 'health' | 'unit2' | 'iks' | null>(null);
+  const [selectedQuiz, setSelectedQuiz] = useState<'python' | 'math' | 'advertising' | 'advertisementOE2' | 'ccHealth' | 'finalExamHealth' | 'banking' | 'health' | 'unit2' | 'iks' | null>(null);
 
   if (selectedQuiz === 'python') {
     return <Quiz />;
@@ -34,6 +35,10 @@ const Index = () => {
 
   if (selectedQuiz === 'ccHealth') {
     return <CCHealthQuiz onBack={() => setSelectedQuiz(null)} />;
+  }
+
+  if (selectedQuiz === 'finalExamHealth') {
+    return <FinalExamHealthQuiz onBack={() => setSelectedQuiz(null)} />;
   }
 
   if (selectedQuiz === 'banking') {
@@ -109,6 +114,28 @@ const Index = () => {
                     className="space-button font-medium px-8 py-3 transition-bounce"
                   >
                     Start Health Quiz
+                  </Button>
+                </div>
+              </div>
+            </Card>
+
+            {/* Final Exam Health & Wellness Quiz Card */}
+            <Card className="space-card shadow-medium p-8 hover:shadow-glow transition-all duration-300 hover:scale-105">
+              <div className="text-center space-y-6">
+                <div className="w-16 h-16 mx-auto bg-primary/20 rounded-full flex items-center justify-center animate-pulse">
+                  <GraduationCap className="w-8 h-8 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-card-foreground mb-3">Final Exam Health and Wellness MCQ</h3>
+                  <p className="text-muted-foreground mb-6">
+                    84 comprehensive MCQs covering conflict resolution, Maslow's hierarchy, 
+                    coping strategies, substance abuse, and peacebuilding.
+                  </p>
+                  <Button 
+                    onClick={() => setSelectedQuiz('finalExamHealth')}
+                    className="space-button font-medium px-8 py-3 transition-bounce"
+                  >
+                    Start Final Exam Quiz
                   </Button>
                 </div>
               </div>
