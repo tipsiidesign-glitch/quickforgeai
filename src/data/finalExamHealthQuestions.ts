@@ -1,9 +1,4 @@
-export interface FinalExamHealthQuestion {
-  id: number;
-  question: string;
-  options: string[];
-  correctAnswer: number;
-}
+import { QuizQuestion } from "./quizQuestions";
 
 export const finalExamHealthQuestions: FinalExamHealthQuestion[] = [
   // Level 1: Identify, Define, Recall, Recognize, List (Q1-20)
