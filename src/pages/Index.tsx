@@ -118,6 +118,28 @@ const Index = () => {
                 </div>
               </div>
             </Card>
+
+            {/* Final Exam Health & Wellness Quiz Card */}
+            <Card className="space-card shadow-medium p-8 hover:shadow-glow transition-all duration-300 hover:scale-105">
+              <div className="text-center space-y-6">
+                <div className="w-16 h-16 mx-auto bg-primary/20 rounded-full flex items-center justify-center animate-pulse">
+                  <GraduationCap className="w-8 h-8 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-card-foreground mb-3">Final Exam Health and Wellness MCQ</h3>
+                  <p className="text-muted-foreground mb-6">
+                    84 comprehensive MCQs covering conflict resolution, Maslow's hierarchy, 
+                    coping strategies, substance abuse, and peacebuilding.
+                  </p>
+                  <Button 
+                    onClick={() => setSelectedQuiz('finalExamHealth')}
+                    className="space-button font-medium px-8 py-3 transition-bounce"
+                  >
+                    Start Final Exam Quiz
+                  </Button>
+                </div>
+              </div>
+            </Card>
           </div>
         </div>
 
