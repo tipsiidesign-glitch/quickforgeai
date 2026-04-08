@@ -1,6 +1,6 @@
 import { QuizQuestion } from "./quizQuestions";
 
-export const finalExamHealthQuestions: FinalExamHealthQuestion[] = [
+export const finalExamHealthQuestions: QuizQuestion[] = [
   // Level 1: Identify, Define, Recall, Recognize, List (Q1-20)
   {
     id: 1,
