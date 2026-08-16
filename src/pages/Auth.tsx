@@ -78,18 +78,6 @@ export default function AuthPage() {
     toast.success("Password reset link sent. Check your inbox.");
   };
 
-  const handleGoogle = async () => {
-    setError(null);
-    const { lovable } = await import("@/integrations/lovable/index");
-    const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
-    if (result.error) {
-      setError("Google sign-in failed. Please try again.");
-      return;
-    }
-    if (result.redirected) return;
-    navigate("/dashboard", { replace: true });
-  };
-
   if (emailSent) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -182,15 +170,6 @@ export default function AuthPage() {
             </form>
           </Tabs>
 
-          <div className="my-6 flex items-center gap-3">
-            <span className="h-px flex-1 bg-border" />
-            <span className="text-xs uppercase tracking-wide text-muted-foreground">or</span>
-            <span className="h-px flex-1 bg-border" />
-          </div>
-
-          <Button variant="outline" className="w-full" onClick={handleGoogle}>
-            Continue with Google
-          </Button>
         </div>
 
         <p className="mt-6 text-center text-xs text-muted-foreground">
