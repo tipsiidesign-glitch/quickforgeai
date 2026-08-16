@@ -14,13 +14,533 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      answer_explanations: {
+        Row: {
+          created_at: string
+          explanation: Json
+          id: string
+          question_id: string
+          user_answer: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          explanation: Json
+          id?: string
+          question_id: string
+          user_answer?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          explanation?: Json
+          id?: string
+          question_id?: string
+          user_answer?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "answer_explanations_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      attempt_answers: {
+        Row: {
+          answered_at: string
+          attempt_id: string
+          id: string
+          is_correct: boolean | null
+          question_id: string
+          selected_option: string | null
+        }
+        Insert: {
+          answered_at?: string
+          attempt_id: string
+          id?: string
+          is_correct?: boolean | null
+          question_id: string
+          selected_option?: string | null
+        }
+        Update: {
+          answered_at?: string
+          attempt_id?: string
+          id?: string
+          is_correct?: boolean | null
+          question_id?: string
+          selected_option?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "attempt_answers_attempt_id_fkey"
+            columns: ["attempt_id"]
+            isOneToOne: false
+            referencedRelation: "test_attempts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "attempt_answers_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      documents: {
+        Row: {
+          created_at: string
+          extracted_text: string | null
+          file_name: string
+          file_size: number | null
+          file_type: string | null
+          id: string
+          processing_error: string | null
+          processing_status: string
+          storage_path: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          extracted_text?: string | null
+          file_name: string
+          file_size?: number | null
+          file_type?: string | null
+          id?: string
+          processing_error?: string | null
+          processing_status?: string
+          storage_path?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          extracted_text?: string | null
+          file_name?: string
+          file_size?: number | null
+          file_type?: string | null
+          id?: string
+          processing_error?: string | null
+          processing_status?: string
+          storage_path?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      friend_requests: {
+        Row: {
+          created_at: string
+          id: string
+          receiver_id: string
+          sender_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          receiver_id: string
+          sender_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          receiver_id?: string
+          sender_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      friendships: {
+        Row: {
+          created_at: string
+          friend_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          friend_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          friend_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          created_at: string
+          id: string
+          is_read: boolean
+          message: string | null
+          related_request_id: string | null
+          related_user_id: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          message?: string | null
+          related_request_id?: string | null
+          related_user_id?: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          message?: string | null
+          related_request_id?: string | null
+          related_user_id?: string | null
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          age: number | null
+          avatar_type: string | null
+          avatar_url: string | null
+          bio: string | null
+          course: string | null
+          created_at: string
+          exam_goal: string | null
+          favorite_subject: string | null
+          full_name: string | null
+          id: string
+          institution: string | null
+          onboarding_completed: boolean
+          preferred_difficulty: string | null
+          preferred_question_count: number | null
+          study_level: string | null
+          subjects: string[] | null
+          updated_at: string
+          username: string | null
+        }
+        Insert: {
+          age?: number | null
+          avatar_type?: string | null
+          avatar_url?: string | null
+          bio?: string | null
+          course?: string | null
+          created_at?: string
+          exam_goal?: string | null
+          favorite_subject?: string | null
+          full_name?: string | null
+          id: string
+          institution?: string | null
+          onboarding_completed?: boolean
+          preferred_difficulty?: string | null
+          preferred_question_count?: number | null
+          study_level?: string | null
+          subjects?: string[] | null
+          updated_at?: string
+          username?: string | null
+        }
+        Update: {
+          age?: number | null
+          avatar_type?: string | null
+          avatar_url?: string | null
+          bio?: string | null
+          course?: string | null
+          created_at?: string
+          exam_goal?: string | null
+          favorite_subject?: string | null
+          full_name?: string | null
+          id?: string
+          institution?: string | null
+          onboarding_completed?: boolean
+          preferred_difficulty?: string | null
+          preferred_question_count?: number | null
+          study_level?: string | null
+          subjects?: string[] | null
+          updated_at?: string
+          username?: string | null
+        }
+        Relationships: []
+      }
+      questions: {
+        Row: {
+          correct_option: string
+          created_at: string
+          difficulty: string | null
+          explanation: string | null
+          id: string
+          option_a: string
+          option_b: string
+          option_c: string
+          option_d: string
+          position: number
+          question_text: string
+          source_reference: string | null
+          test_id: string
+          topic: string | null
+        }
+        Insert: {
+          correct_option: string
+          created_at?: string
+          difficulty?: string | null
+          explanation?: string | null
+          id?: string
+          option_a: string
+          option_b: string
+          option_c: string
+          option_d: string
+          position?: number
+          question_text: string
+          source_reference?: string | null
+          test_id: string
+          topic?: string | null
+        }
+        Update: {
+          correct_option?: string
+          created_at?: string
+          difficulty?: string | null
+          explanation?: string | null
+          id?: string
+          option_a?: string
+          option_b?: string
+          option_c?: string
+          option_d?: string
+          position?: number
+          question_text?: string
+          source_reference?: string | null
+          test_id?: string
+          topic?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "questions_test_id_fkey"
+            columns: ["test_id"]
+            isOneToOne: false
+            referencedRelation: "tests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      test_attempts: {
+        Row: {
+          accuracy: number | null
+          completed_at: string | null
+          correct_count: number
+          current_question: number
+          id: string
+          last_activity_at: string
+          option_orders: Json
+          question_order: Json
+          score: number | null
+          started_at: string
+          status: string
+          test_id: string
+          time_taken_seconds: number | null
+          unanswered_count: number
+          user_id: string
+          wrong_count: number
+        }
+        Insert: {
+          accuracy?: number | null
+          completed_at?: string | null
+          correct_count?: number
+          current_question?: number
+          id?: string
+          last_activity_at?: string
+          option_orders?: Json
+          question_order?: Json
+          score?: number | null
+          started_at?: string
+          status?: string
+          test_id: string
+          time_taken_seconds?: number | null
+          unanswered_count?: number
+          user_id: string
+          wrong_count?: number
+        }
+        Update: {
+          accuracy?: number | null
+          completed_at?: string | null
+          correct_count?: number
+          current_question?: number
+          id?: string
+          last_activity_at?: string
+          option_orders?: Json
+          question_order?: Json
+          score?: number | null
+          started_at?: string
+          status?: string
+          test_id?: string
+          time_taken_seconds?: number | null
+          unanswered_count?: number
+          user_id?: string
+          wrong_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "test_attempts_test_id_fkey"
+            columns: ["test_id"]
+            isOneToOne: false
+            referencedRelation: "tests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tests: {
+        Row: {
+          created_at: string
+          description: string | null
+          difficulty: string
+          document_id: string | null
+          id: string
+          question_count: number
+          status: string
+          subject: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          difficulty?: string
+          document_id?: string | null
+          id?: string
+          question_count?: number
+          status?: string
+          subject?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          difficulty?: string
+          document_id?: string | null
+          id?: string
+          question_count?: number
+          status?: string
+          subject?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tests_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
-      [_ in never]: never
+      leaderboard_stats: {
+        Row: {
+          average_accuracy: number | null
+          best_accuracy: number | null
+          best_accuracy_attempts: number | null
+          best_achieved_at: string | null
+          best_score: number | null
+          questions_answered: number | null
+          tests_completed: number | null
+          total_correct: number | null
+          total_wrong: number | null
+          user_id: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
-      [_ in never]: never
+      get_leaderboard: {
+        Args: { _limit?: number; _offset?: number; _scope?: string }
+        Returns: {
+          avatar_url: string
+          average_accuracy: number
+          best_accuracy: number
+          full_name: string
+          questions_answered: number
+          rank: number
+          study_level: string
+          tests_completed: number
+          user_id: string
+          username: string
+        }[]
+      }
+      get_my_stats: {
+        Args: never
+        Returns: {
+          average_accuracy: number
+          best_accuracy: number
+          best_score: number
+          questions_answered: number
+          tests_completed: number
+          total_correct: number
+          total_wrong: number
+        }[]
+      }
+      respond_friend_request: {
+        Args: { _accept: boolean; _request_id: string }
+        Returns: undefined
+      }
+      search_users: {
+        Args: { _limit?: number; _q: string }
+        Returns: {
+          avatar_url: string
+          course: string
+          full_name: string
+          id: string
+          relation: string
+          study_level: string
+          username: string
+        }[]
+      }
+      submit_attempt: {
+        Args: { _attempt_id: string }
+        Returns: {
+          accuracy: number | null
+          completed_at: string | null
+          correct_count: number
+          current_question: number
+          id: string
+          last_activity_at: string
+          option_orders: Json
+          question_order: Json
+          score: number | null
+          started_at: string
+          status: string
+          test_id: string
+          time_taken_seconds: number | null
+          unanswered_count: number
+          user_id: string
+          wrong_count: number
+        }
+        SetofOptions: {
+          from: "*"
+          to: "test_attempts"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      username_available: { Args: { _username: string }; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
