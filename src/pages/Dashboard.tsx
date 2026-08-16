@@ -11,7 +11,7 @@ export default function Dashboard() {
       <p className="mt-1 text-sm text-muted-foreground">Upload study material to generate your first AI practice test.</p>
       <div className="mt-8">
         <EmptyState
-          icon={FileUp}
+          icon={<FileUp className="h-6 w-6" aria-hidden="true" />}
           title="No tests yet"
           description="Document upload and AI test generation are being wired up next."
         />
