@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { UserAvatar } from "@/components/common/UserAvatar";
-import { PrepzyLogo } from "@/components/common/PrepzyLogo";
+import { BrandLogo } from "@/components/common/BrandLogo";
 import { NotificationBell } from "@/components/layout/NotificationBell";
 
 const NAV = [
@@ -27,7 +27,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
     <div className="min-h-screen bg-background">
       {/* Desktop sidebar */}
       <aside className="fixed inset-y-0 left-0 z-30 hidden w-60 flex-col bg-sidebar px-4 py-6 md:flex lg:w-64">
-        <PrepzyLogo inverted className="px-2 text-base" />
+        <BrandLogo inverted className="px-2 text-base" />
         <nav aria-label="Main" className="mt-8 flex flex-1 flex-col gap-1">
           {NAV.map((item) => (
             <NavLink
@@ -60,7 +60,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
         <header className="sticky top-0 z-20 flex h-16 items-center justify-between gap-3 border-b border-border bg-card/90 px-4 backdrop-blur sm:px-6">
           <div className="flex min-w-0 items-center gap-3">
             <span className="md:hidden">
-              <PrepzyLogo className="text-sm" />
+              <BrandLogo className="text-sm" />
             </span>
             {title ? <h1 className="hidden truncate text-lg font-semibold md:block">{title}</h1> : null}
           </div>

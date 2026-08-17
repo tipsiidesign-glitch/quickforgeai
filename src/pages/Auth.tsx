@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { PrepzyLogo } from "@/components/common/PrepzyLogo";
+import { BrandLogo } from "@/components/common/BrandLogo";
 import { Loader2 } from "lucide-react";
 
 const emailSchema = z.string().trim().email("Enter a valid email address").max(255);
@@ -82,7 +82,7 @@ export default function AuthPage() {
     return (
       <main className="flex min-h-screen items-center justify-center bg-background px-4">
         <div className="surface-card w-full max-w-md p-8 text-center">
-          <PrepzyLogo className="justify-center text-lg" />
+          <BrandLogo className="justify-center text-lg" />
           <h1 className="mt-6 text-xl font-bold">Check your email</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             We sent a confirmation link to <span className="font-medium text-foreground">{email}</span>. Confirm your
@@ -100,7 +100,7 @@ export default function AuthPage() {
     <main className="flex min-h-screen flex-col items-center justify-center bg-background px-4 py-10">
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
-          <PrepzyLogo className="justify-center text-xl" />
+          <BrandLogo className="justify-center text-xl" />
           <p className="mt-3 text-sm text-muted-foreground">Your AI-powered exam preparation companion.</p>
         </div>
 

@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { PrepzyLogo } from "@/components/common/PrepzyLogo";
+import { BrandLogo } from "@/components/common/BrandLogo";
 import { toast } from "sonner";
 
 export default function ResetPassword() {
@@ -38,7 +38,7 @@ export default function ResetPassword() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-background px-4">
       <form onSubmit={submit} className="surface-card w-full max-w-md space-y-4 p-8">
-        <PrepzyLogo className="justify-center text-lg" />
+        <BrandLogo className="justify-center text-lg" />
         <h1 className="text-center text-xl font-bold">Set a new password</h1>
         {!ready ? (
           <p className="text-center text-sm text-muted-foreground">
