@@ -2,10 +2,11 @@ import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
 import { z } from "npm:zod@3";
 import { callAi, parseJson, AiError } from "../_shared/ai.ts";
 import { getUserClient } from "../_shared/auth.ts";
+import { parseQuestions, normalise as normaliseText, type ParsedQuestion } from "../_shared/mcqParser.ts";
+import { resolveAnswerFromWeb } from "../_shared/webAnswer.ts";
 
 const BodySchema = z.object({
   document_id: z.string().uuid(),
-  question_count: z.number().int().min(5).max(50),
   difficulty: z.enum(["easy", "medium", "hard", "mixed"]),
   title: z.string().trim().max(120).optional(),
   subject: z.string().trim().max(80).optional(),
@@ -20,7 +21,7 @@ type AiQuestion = {
   topic?: string;
 };
 
-type AiPayload = { title?: string; subject?: string; questions?: AiQuestion[] };
+type AiPayload = { title?: string; subject?: string; mode?: string; questions?: AiQuestion[] };
 
 const MODEL_READABLE: Record<string, string> = {
   pdf: "application/pdf",
