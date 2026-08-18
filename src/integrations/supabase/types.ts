@@ -94,36 +94,45 @@ export type Database = {
       documents: {
         Row: {
           created_at: string
+          detected_question_count: number | null
+          document_mode: string | null
           extracted_text: string | null
           file_name: string
           file_size: number | null
           file_type: string | null
           id: string
           processing_error: string | null
+          processing_stage: string | null
           processing_status: string
           storage_path: string | null
           user_id: string
         }
         Insert: {
           created_at?: string
+          detected_question_count?: number | null
+          document_mode?: string | null
           extracted_text?: string | null
           file_name: string
           file_size?: number | null
           file_type?: string | null
           id?: string
           processing_error?: string | null
+          processing_stage?: string | null
           processing_status?: string
           storage_path?: string | null
           user_id: string
         }
         Update: {
           created_at?: string
+          detected_question_count?: number | null
+          document_mode?: string | null
           extracted_text?: string | null
           file_name?: string
           file_size?: number | null
           file_type?: string | null
           id?: string
           processing_error?: string | null
+          processing_stage?: string | null
           processing_status?: string
           storage_path?: string | null
           user_id?: string
@@ -279,6 +288,11 @@ export type Database = {
       }
       questions: {
         Row: {
+          answer_confidence: string
+          answer_source: string
+          answer_source_title: string | null
+          answer_source_url: string | null
+          correct_answer: string | null
           correct_option: string
           created_at: string
           difficulty: string | null
@@ -295,6 +309,11 @@ export type Database = {
           topic: string | null
         }
         Insert: {
+          answer_confidence?: string
+          answer_source?: string
+          answer_source_title?: string | null
+          answer_source_url?: string | null
+          correct_answer?: string | null
           correct_option: string
           created_at?: string
           difficulty?: string | null
@@ -311,6 +330,11 @@ export type Database = {
           topic?: string | null
         }
         Update: {
+          answer_confidence?: string
+          answer_source?: string
+          answer_source_title?: string | null
+          answer_source_url?: string | null
+          correct_answer?: string | null
           correct_option?: string
           created_at?: string
           difficulty?: string | null
@@ -403,6 +427,9 @@ export type Database = {
       }
       tests: {
         Row: {
+          answers_from_ai: number
+          answers_from_document: number
+          answers_from_web: number
           created_at: string
           description: string | null
           difficulty: string
@@ -416,6 +443,9 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          answers_from_ai?: number
+          answers_from_document?: number
+          answers_from_web?: number
           created_at?: string
           description?: string | null
           difficulty?: string
@@ -429,6 +459,9 @@ export type Database = {
           user_id: string
         }
         Update: {
+          answers_from_ai?: number
+          answers_from_document?: number
+          answers_from_web?: number
           created_at?: string
           description?: string | null
           difficulty?: string
