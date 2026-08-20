@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { UserAvatar } from "@/components/common/UserAvatar";
 import { BrandLogo } from "@/components/common/BrandLogo";
 import { NotificationBell } from "@/components/layout/NotificationBell";
+import { ThemeToggle } from "@/components/common/ThemeToggle";
 
 const NAV = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -66,6 +67,7 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
             {title ? <h1 className="hidden truncate text-lg font-semibold md:block">{title}</h1> : null}
           </div>
           <div className="flex items-center gap-1 sm:gap-2">
+            <ThemeToggle />
             <NotificationBell />
             <NavLink to="/profile" aria-label="Open profile">
               <UserAvatar name={profile?.full_name} avatarUrl={profile?.avatar_url} size="sm" />

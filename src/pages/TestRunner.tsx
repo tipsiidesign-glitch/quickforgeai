@@ -6,11 +6,13 @@ import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BrandLogo } from "@/components/common/BrandLogo";
+import { ThemeToggle } from "@/components/common/ThemeToggle";
 import { cn } from "@/lib/utils";
 import { shuffle, OPTION_KEYS, type OptionKey } from "@/lib/shuffle";
 import { formatDuration } from "@/lib/format";
+import { isSoundEnabled, playFeedback, setSoundEnabled } from "@/lib/sound";
 import type { Tables } from "@/integrations/supabase/types";
-import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle2, Loader2, Volume2, VolumeX, XCircle } from "lucide-react";
 
 type Question = Tables<"questions">;
 type Attempt = Tables<"test_attempts">;
@@ -23,16 +25,22 @@ export default function TestRunner() {
   const { testId } = useParams<{ testId: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const [test, setTest] = useState<Tables<"tests"> | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [attempt, setAttempt] = useState<Attempt | null>(null);
   const [order, setOrder] = useState<string[]>([]);
   const [optionOrders, setOptionOrders] = useState<Record<string, OptionKey[]>>({});
   const [answers, setAnswers] = useState<Record<string, OptionKey>>({});
+  const [locked, setLocked] = useState<Record<string, boolean>>({});
+  const [selected, setSelected] = useState<OptionKey | null>(null);
   const [index, setIndex] = useState(0);
   const [elapsed, setElapsed] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [shake, setShake] = useState(false);
+  const [sound, setSound] = useState(true);
+
+  useEffect(() => { setSound(isSoundEnabled()); }, []);
 
   const start = useCallback(async () => {
     if (!testId || !user) return;
@@ -45,8 +53,43 @@ export default function TestRunner() {
       navigate("/dashboard", { replace: true });
       return;
     }
-    setTest(testRow);
     setQuestions(questionRows);
+
+    // Resume an in-progress attempt if one exists.
+    const { data: existing } = await supabase
+      .from("test_attempts")
+      .select("*")
+      .eq("test_id", testRow.id)
+      .eq("user_id", user.id)
+      .eq("status", "in_progress")
+      .order("started_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (existing && Array.isArray(existing.question_order) && existing.question_order.length) {
+      const resumedOrder = existing.question_order as string[];
+      setAttempt(existing);
+      setOrder(resumedOrder);
+      setOptionOrders((existing.option_orders ?? {}) as Record<string, OptionKey[]>);
+      const { data: saved } = await supabase
+        .from("attempt_answers")
+        .select("*")
+        .eq("attempt_id", existing.id);
+      const answerMap: Record<string, OptionKey> = {};
+      const lockMap: Record<string, boolean> = {};
+      (saved ?? []).forEach((a) => {
+        if (a.selected_option) answerMap[a.question_id] = a.selected_option as OptionKey;
+        lockMap[a.question_id] = true;
+      });
+      setAnswers(answerMap);
+      setLocked(lockMap);
+      const next = resumedOrder.findIndex((qid) => !lockMap[qid]);
+      setIndex(next === -1 ? resumedOrder.length - 1 : next);
+      setElapsed(Math.max(0, Math.floor((Date.now() - new Date(existing.started_at).getTime()) / 1000)));
+      setLoading(false);
+      toast.info("Resumed your test where you left off.");
+      return;
+    }
 
     const questionOrder = shuffle(questionRows.map((q) => q.id));
     const opts: Record<string, OptionKey[]> = {};
@@ -85,33 +128,75 @@ export default function TestRunner() {
   const byId = useMemo(() => Object.fromEntries(questions.map((q) => [q.id, q])), [questions]);
   const currentId = order[index];
   const current = currentId ? byId[currentId] : null;
-  const answeredCount = Object.keys(answers).length;
+  const answeredCount = Object.keys(locked).length;
+  const isLocked = currentId ? !!locked[currentId] : false;
+  const chosen = currentId ? (locked[currentId] ? answers[currentId] ?? null : selected) : null;
+  const isLast = index === order.length - 1;
 
-  const select = (key: OptionKey) => {
-    if (!currentId) return;
-    setAnswers((prev) => ({ ...prev, [currentId]: key }));
+  useEffect(() => { setSelected(null); }, [index]);
+
+  const goNext = useCallback(() => {
+    setIndex((i) => Math.min(i + 1, order.length - 1));
+  }, [order.length]);
+
+  const submitAnswer = async () => {
+    if (!attempt || !current || !selected || isLocked) return;
+    setSaving(true);
+    const correct = selected === current.correct_option;
+    const { error } = await supabase.from("attempt_answers").upsert(
+      {
+        attempt_id: attempt.id,
+        question_id: current.id,
+        selected_option: selected,
+        is_correct: correct,
+      },
+      { onConflict: "attempt_id,question_id" },
+    );
+    setSaving(false);
+    if (error) {
+      toast.error("We couldn't save that answer. Please try again.");
+      return;
+    }
+    setAnswers((prev) => ({ ...prev, [current.id]: selected }));
+    setLocked((prev) => ({ ...prev, [current.id]: true }));
+    playFeedback(correct ? "correct" : "wrong");
+    if (!correct) {
+      setShake(true);
+      setTimeout(() => setShake(false), 450);
+    }
+    void supabase
+      .from("test_attempts")
+      .update({ current_question: index, last_activity_at: new Date().toISOString(), time_taken_seconds: elapsed })
+      .eq("id", attempt.id);
+    if (!isLast) setTimeout(goNext, correct ? 900 : 1600);
   };
 
-  const submit = async () => {
+  const finish = async () => {
     if (!attempt) return;
     setSubmitting(true);
-    const rows = order.map((qid) => ({
-      attempt_id: attempt.id,
-      question_id: qid,
-      selected_option: answers[qid] ?? null,
-      is_correct: answers[qid] ? answers[qid] === byId[qid].correct_option : null,
-    }));
-    const { error: insertError } = await supabase.from("attempt_answers").insert(rows);
-    if (insertError) {
-      setSubmitting(false);
-      toast.error("We couldn't save your answers. Please try again.");
-      return;
+    const unanswered = order.filter((qid) => !locked[qid]);
+    if (unanswered.length) {
+      await supabase.from("attempt_answers").upsert(
+        unanswered.map((qid) => ({
+          attempt_id: attempt.id,
+          question_id: qid,
+          selected_option: null,
+          is_correct: null,
+        })),
+        { onConflict: "attempt_id,question_id" },
+      );
     }
     await supabase.from("test_attempts").update({ time_taken_seconds: elapsed, current_question: index }).eq("id", attempt.id);
     const { error } = await supabase.rpc("submit_attempt", { _attempt_id: attempt.id });
     setSubmitting(false);
     if (error) return toast.error("We couldn't submit your test. Please try again.");
     navigate(`/results/${attempt.id}`, { replace: true });
+  };
+
+  const toggleSound = () => {
+    const next = !sound;
+    setSound(next);
+    setSoundEnabled(next);
   };
 
   if (loading || !current) {
@@ -133,7 +218,13 @@ export default function TestRunner() {
             <ArrowLeft className="mr-1 h-4 w-4" aria-hidden="true" /> Exit
           </Button>
           <BrandLogo className="hidden text-sm sm:flex" />
-          <span className="text-sm font-medium tabular-nums text-muted-foreground">{formatDuration(elapsed)}</span>
+          <div className="flex items-center gap-1">
+            <span className="text-sm font-medium tabular-nums text-muted-foreground">{formatDuration(elapsed)}</span>
+            <Button variant="ghost" size="icon" onClick={toggleSound} aria-label={sound ? "Mute answer sounds" : "Unmute answer sounds"}>
+              {sound ? <Volume2 className="h-5 w-5" aria-hidden="true" /> : <VolumeX className="h-5 w-5" aria-hidden="true" />}
+            </Button>
+            <ThemeToggle />
+          </div>
         </div>
         <div className="h-1 w-full bg-muted">
           <div className="h-1 bg-primary transition-all" style={{ width: `${progress}%` }} />
@@ -146,25 +237,37 @@ export default function TestRunner() {
         </p>
         <h1 className="mt-2 text-xl font-semibold leading-snug">{current.question_text}</h1>
 
-        <ul className="mt-6 space-y-3">
+        <ul className={cn("mt-6 space-y-3", shake && "animate-shake")}>
           {(optionOrders[current.id] ?? OPTION_KEYS).map((key, i) => {
-            const active = answers[current.id] === key;
+            const active = chosen === key;
+            const isCorrectOption = key === current.correct_option;
+            const revealed = isLocked;
             return (
               <li key={key}>
                 <button
                   type="button"
-                  onClick={() => select(key)}
+                  onClick={() => !isLocked && setSelected(key)}
+                  disabled={isLocked}
                   aria-pressed={active}
                   className={cn(
                     "flex w-full items-start gap-3 rounded-2xl border px-4 py-3 text-left transition-colors",
-                    active ? "border-primary bg-accent" : "border-border bg-card hover:bg-muted",
+                    revealed && isCorrectOption && "border-success bg-success-soft",
+                    revealed && active && !isCorrectOption && "border-destructive bg-error-soft",
+                    revealed && !isCorrectOption && !active && "border-border bg-card opacity-70",
+                    !revealed && (active ? "border-primary bg-accent" : "border-border bg-card hover:bg-muted"),
+                    revealed && active && "animate-pop",
                   )}
                 >
                   <span className={cn(
                     "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-sm font-semibold",
-                    active ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground",
+                    revealed && isCorrectOption ? "bg-success text-success-foreground"
+                      : revealed && active ? "bg-destructive text-destructive-foreground"
+                      : active ? "bg-primary text-primary-foreground"
+                      : "bg-muted text-muted-foreground",
                   )}>
-                    {String.fromCharCode(65 + i)}
+                    {revealed && isCorrectOption ? <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
+                      : revealed && active ? <XCircle className="h-4 w-4" aria-hidden="true" />
+                      : String.fromCharCode(65 + i)}
                   </span>
                   <span className="text-sm">{optionText(current, key)}</span>
                 </button>
@@ -173,20 +276,45 @@ export default function TestRunner() {
           })}
         </ul>
 
+        {isLocked ? (
+          <div
+            role="status"
+            className={cn(
+              "mt-5 rounded-2xl p-4 text-sm",
+              answers[current.id] === current.correct_option
+                ? "bg-success-soft text-success"
+                : "bg-error-soft text-destructive",
+            )}
+          >
+            <p className="font-semibold">
+              {answers[current.id] === current.correct_option ? "Correct!" : "Not quite."}
+            </p>
+            {current.explanation ? <p className="mt-1 text-foreground/80">{current.explanation}</p> : null}
+          </div>
+        ) : null}
+
         <div className="mt-8 flex items-center gap-3">
           <Button variant="outline" disabled={index === 0} onClick={() => setIndex((i) => i - 1)}>
             <ArrowLeft className="mr-1 h-4 w-4" aria-hidden="true" /> Previous
           </Button>
-          {index < order.length - 1 ? (
-            <Button className="flex-1" onClick={() => setIndex((i) => i + 1)}>
-              Next <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
+          {!isLocked ? (
+            <Button className="flex-1" disabled={!selected || saving} onClick={submitAnswer}>
+              {saving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" /> : null}
+              Submit answer
+            </Button>
+          ) : !isLast ? (
+            <Button className="flex-1" onClick={goNext}>
+              Next question <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
             </Button>
           ) : (
-            <Button className="flex-1" disabled={submitting} onClick={submit}>
+            <Button className="flex-1" disabled={submitting} onClick={finish}>
               {submitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" /> : null}
-              Submit test
+              Finish test
             </Button>
           )}
+          {isLast && !isLocked ? (
+            <Button variant="outline" disabled={submitting} onClick={finish}>Finish</Button>
+          ) : null}
         </div>
       </div>
     </main>
