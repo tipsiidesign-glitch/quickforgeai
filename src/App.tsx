@@ -3,6 +3,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
+import { ThemeProvider } from "@/hooks/useTheme";
 import AuthPage from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";
 import Dashboard from "./pages/Dashboard";
@@ -33,7 +34,8 @@ function RequireAuth({ children }: { children: JSX.Element }) {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
+    <ThemeProvider>
+     <TooltipProvider>
       <Sonner />
       <BrowserRouter>
         <AuthProvider>
@@ -52,7 +54,8 @@ const App = () => (
           </Routes>
         </AuthProvider>
       </BrowserRouter>
-    </TooltipProvider>
+     </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 
