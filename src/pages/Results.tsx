@@ -65,6 +65,7 @@ export default function Results() {
   const [loading, setLoading] = useState(true);
   const [explanations, setExplanations] = useState<Record<string, Explanation>>({});
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [showWrongOnly, setShowWrongOnly] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -156,6 +157,8 @@ export default function Results() {
                     </p>
                   ) : null}
                   {q.explanation ? <p className="mt-2 text-sm text-muted-foreground">{q.explanation}</p> : null}
+                  <div><SourceBadge q={q} /></div>
+
 
                   {!isCorrect ? (
                     ex ? (
