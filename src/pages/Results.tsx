@@ -9,7 +9,7 @@ import { StatCard } from "@/components/common/StatCard";
 import { cn } from "@/lib/utils";
 import { formatAccuracy, formatDuration } from "@/lib/format";
 import type { Tables } from "@/integrations/supabase/types";
-import { CheckCircle2, Clock, Sparkles, Target, XCircle, Loader2 } from "lucide-react";
+import { CheckCircle2, Clock, Sparkles, Target, XCircle, Loader2, BookOpen } from "lucide-react";
 
 type Question = Tables<"questions">;
 type Answer = Tables<"attempt_answers">;
@@ -22,10 +22,39 @@ type Explanation = {
 
 const LETTERS = { a: "A", b: "B", c: "C", d: "D" } as const;
 
+const SOURCE_LABELS: Record<string, string> = {
+  document: "From document",
+  formatting: "From document formatting",
+  answer_key: "From answer key",
+  web: "Verified online",
+  ai: "AI generated",
+};
+
+function SourceBadge({ q }: { q: Question }) {
+  const source = (q as unknown as { answer_source?: string }).answer_source;
+  if (!source) return null;
+  const url = (q as unknown as { answer_source_url?: string | null }).answer_source_url;
+  const title = (q as unknown as { answer_source_title?: string | null }).answer_source_title;
+  const label = SOURCE_LABELS[source] ?? source;
+  return (
+    <span className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">
+      <BookOpen className="h-3 w-3" aria-hidden="true" />
+      {url ? (
+        <a href={url} target="_blank" rel="noreferrer noopener" className="underline underline-offset-2">
+          {label}{title ? ` · ${title}` : ""}
+        </a>
+      ) : (
+        <>{label}</>
+      )}
+    </span>
+  );
+}
+
 function textOf(q: Question, key?: string | null) {
   if (!key) return null;
   return ({ a: q.option_a, b: q.option_b, c: q.option_c, d: q.option_d } as Record<string, string>)[key] ?? null;
 }
+
 
 export default function Results() {
   const { attemptId } = useParams<{ attemptId: string }>();
@@ -36,6 +65,7 @@ export default function Results() {
   const [loading, setLoading] = useState(true);
   const [explanations, setExplanations] = useState<Record<string, Explanation>>({});
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [showWrongOnly, setShowWrongOnly] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -95,9 +125,15 @@ export default function Results() {
         <Button asChild variant="outline"><Link to="/dashboard">Back to dashboard</Link></Button>
       </div>
 
-      <h3 className="mt-10 text-lg font-semibold">Review {wrong.length ? `· ${wrong.length} to improve` : "· perfect score"}</h3>
+      <div className="mt-10 flex flex-wrap items-center justify-between gap-3">
+        <h3 className="text-lg font-semibold">Review {wrong.length ? `· ${wrong.length} to improve` : "· perfect score"}</h3>
+        <div className="flex gap-2">
+          <Button size="sm" variant={showWrongOnly ? "outline" : "default"} onClick={() => setShowWrongOnly(false)}>All questions</Button>
+          <Button size="sm" variant={showWrongOnly ? "default" : "outline"} disabled={!wrong.length} onClick={() => setShowWrongOnly(true)}>Wrong only</Button>
+        </div>
+      </div>
       <ul className="mt-4 space-y-4">
-        {questions.map((q) => {
+        {(showWrongOnly ? wrong : questions).map((q) => {
           const answer = answerFor(q.id);
           const isCorrect = answer?.selected_option === q.correct_option;
           const ex = explanations[q.id];
@@ -121,6 +157,8 @@ export default function Results() {
                     </p>
                   ) : null}
                   {q.explanation ? <p className="mt-2 text-sm text-muted-foreground">{q.explanation}</p> : null}
+                  <div><SourceBadge q={q} /></div>
+
 
                   {!isCorrect ? (
                     ex ? (
