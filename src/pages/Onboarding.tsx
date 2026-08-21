@@ -215,7 +215,7 @@ export default function Onboarding() {
           {step === 3 ? (
             <>
               <h1 className="text-xl font-bold">Pick your avatar and defaults</h1>
-              <div className="grid grid-cols-4 gap-3 sm:grid-cols-6">
+              <div className="grid grid-cols-4 gap-3 sm:grid-cols-7">
                 {BUILTIN_AVATARS.map((a) => {
                   const value = `${BUILTIN_PREFIX}${a.id}`;
                   const active = avatar === value;
@@ -226,15 +226,15 @@ export default function Onboarding() {
                       aria-label={a.label}
                       aria-pressed={active}
                       onClick={() => setAvatar(value)}
-                      className={cn("relative flex h-14 w-14 items-center justify-center rounded-full ring-2 transition", active ? "ring-primary" : "ring-transparent")}
-                      style={{ background: a.bg }}
+                      className={cn("relative rounded-full ring-2 ring-offset-2 ring-offset-background transition hover:scale-105", active ? "ring-primary" : "ring-transparent")}
                     >
-                      <span aria-hidden="true" className="text-2xl">{a.emoji}</span>
+                      <img src={a.src} alt="" loading="lazy" className="h-14 w-14 rounded-full bg-muted object-cover" />
                       {active ? <Check className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full bg-primary p-0.5 text-primary-foreground" aria-hidden="true" /> : null}
                     </button>
                   );
                 })}
               </div>
+
               <div className="space-y-2">
                 <Label>Default difficulty</Label>
                 <div className="flex flex-wrap gap-2">
