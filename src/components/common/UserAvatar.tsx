@@ -21,18 +21,15 @@ export function UserAvatar({ name, avatarUrl, size = "md", className }: Props) {
 
   if (builtin) {
     return (
-      <div
-        role="img"
-        aria-label={label}
-        className={cn("flex shrink-0 items-center justify-center rounded-full", sizes[size], className)}
-        style={{ background: builtin.bg }}
-      >
-        <span aria-hidden="true" style={{ fontSize: "1.4em", lineHeight: 1 }}>
-          {builtin.emoji}
-        </span>
-      </div>
+      <img
+        src={builtin.src}
+        alt={label}
+        loading="lazy"
+        className={cn("shrink-0 rounded-full bg-muted object-cover", sizes[size], className)}
+      />
     );
   }
+
 
   if (avatarUrl && !isBuiltinAvatar(avatarUrl)) {
     return (
