@@ -1,6 +1,6 @@
 const GATEWAY_URL = "https://ai.gateway.lovable.dev/v1/chat/completions";
 
-export const AI_MODEL = Deno.env.get("GEMINI_MODEL") ?? "google/gemini-3.5-flash";
+export const AI_MODEL = Deno.env.get("GEMINI_MODEL") ?? "google/gemini-2.5-flash";
 
 export class AiError extends Error {
   status: number;
@@ -27,7 +27,7 @@ export async function callAi(messages: Message[], maxTokens: number): Promise<st
   for (let attempt = 0; attempt < 2; attempt++) {
     const response = await fetch(GATEWAY_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json", "Lovable-API-Key": key },
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
       body,
     });
 
