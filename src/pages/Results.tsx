@@ -124,9 +124,15 @@ export default function Results() {
         <Button asChild variant="outline"><Link to="/dashboard">Back to dashboard</Link></Button>
       </div>
 
-      <h3 className="mt-10 text-lg font-semibold">Review {wrong.length ? `· ${wrong.length} to improve` : "· perfect score"}</h3>
+      <div className="mt-10 flex flex-wrap items-center justify-between gap-3">
+        <h3 className="text-lg font-semibold">Review {wrong.length ? `· ${wrong.length} to improve` : "· perfect score"}</h3>
+        <div className="flex gap-2">
+          <Button size="sm" variant={showWrongOnly ? "outline" : "default"} onClick={() => setShowWrongOnly(false)}>All questions</Button>
+          <Button size="sm" variant={showWrongOnly ? "default" : "outline"} disabled={!wrong.length} onClick={() => setShowWrongOnly(true)}>Wrong only</Button>
+        </div>
+      </div>
       <ul className="mt-4 space-y-4">
-        {questions.map((q) => {
+        {(showWrongOnly ? wrong : questions).map((q) => {
           const answer = answerFor(q.id);
           const isCorrect = answer?.selected_option === q.correct_option;
           const ex = explanations[q.id];
