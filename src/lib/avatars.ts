@@ -1,23 +1,37 @@
+import a01 from "@/assets/avatars/avatar-01.png.asset.json";
+import a02 from "@/assets/avatars/avatar-02.png.asset.json";
+import a03 from "@/assets/avatars/avatar-03.png.asset.json";
+import a04 from "@/assets/avatars/avatar-04.png.asset.json";
+import a05 from "@/assets/avatars/avatar-05.png.asset.json";
+import a06 from "@/assets/avatars/avatar-06.png.asset.json";
+import a07 from "@/assets/avatars/avatar-07.png.asset.json";
+import a08 from "@/assets/avatars/avatar-08.png.asset.json";
+import a09 from "@/assets/avatars/avatar-09.png.asset.json";
+import a10 from "@/assets/avatars/avatar-10.png.asset.json";
+import a11 from "@/assets/avatars/avatar-11.png.asset.json";
+import a12 from "@/assets/avatars/avatar-12.png.asset.json";
+import a13 from "@/assets/avatars/avatar-13.png.asset.json";
+
 export type BuiltinAvatar = {
   id: string;
   label: string;
-  emoji: string;
-  bg: string;
+  src: string;
 };
 
 export const BUILTIN_AVATARS: BuiltinAvatar[] = [
-  { id: "student-1", label: "Student", emoji: "🧑‍🎓", bg: "hsl(213 100% 94%)" },
-  { id: "student-2", label: "Graduate", emoji: "👩‍🎓", bg: "hsl(150 55% 92%)" },
-  { id: "student-3", label: "Scholar", emoji: "👨‍🎓", bg: "hsl(38 100% 93%)" },
-  { id: "dev", label: "Developer", emoji: "🧑‍💻", bg: "hsl(214 40% 92%)" },
-  { id: "scientist", label: "Scientist", emoji: "🔬", bg: "hsl(190 60% 92%)" },
-  { id: "book", label: "Book learner", emoji: "📚", bg: "hsl(28 80% 92%)" },
-  { id: "glasses", label: "Glasses student", emoji: "🤓", bg: "hsl(266 60% 94%)" },
-  { id: "creative", label: "Creative", emoji: "🎨", bg: "hsl(340 70% 94%)" },
-  { id: "teacher", label: "Academic", emoji: "🧑‍🏫", bg: "hsl(160 45% 92%)" },
-  { id: "chem", label: "Lab student", emoji: "🧪", bg: "hsl(200 70% 93%)" },
-  { id: "rocket", label: "Achiever", emoji: "🚀", bg: "hsl(220 60% 93%)" },
-  { id: "brain", label: "Thinker", emoji: "🧠", bg: "hsl(0 75% 95%)" },
+  { id: "avatar-01", label: "Green hoodie student", src: a01.url },
+  { id: "avatar-02", label: "Long hair student", src: a02.url },
+  { id: "avatar-03", label: "Beige hoodie student", src: a03.url },
+  { id: "avatar-04", label: "Bun hairstyle student", src: a04.url },
+  { id: "avatar-05", label: "Round glasses student", src: a05.url },
+  { id: "avatar-06", label: "Wavy hair student", src: a06.url },
+  { id: "avatar-07", label: "Navy shirt student", src: a07.url },
+  { id: "avatar-08", label: "Black cap student", src: a08.url },
+  { id: "avatar-09", label: "Denim jacket student", src: a09.url },
+  { id: "avatar-10", label: "Pink sweater student", src: a10.url },
+  { id: "avatar-11", label: "Curly hair student", src: a11.url },
+  { id: "avatar-12", label: "Purple hoodie student", src: a12.url },
+  { id: "avatar-13", label: "Backwards cap student", src: a13.url },
 ];
 
 export const BUILTIN_PREFIX = "builtin:";
