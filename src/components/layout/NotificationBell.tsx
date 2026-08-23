@@ -68,10 +68,11 @@ export function NotificationBell() {
   };
 
   const respond = async (notification: Notification, accept: boolean) => {
-    if (!notification.related_request_id) return;
+    const requestId = notification.related_request_id;
+    if (!requestId) return;
     setBusyId(notification.id);
     const { error } = await supabase.rpc("respond_friend_request", {
-      _request_id: notification.related_request_id,
+      _request_id: requestId,
       _accept: accept,
     });
     setBusyId(null);
@@ -79,6 +80,23 @@ export function NotificationBell() {
       toast.error("Something went wrong. Please try again.");
       return;
     }
+    // Resolve locally so the accept/reject actions disappear immediately.
+    setPendingRequests((prev) => {
+      const next = new Set(prev);
+      next.delete(requestId);
+      return next;
+    });
+    setItems((prev) =>
+      prev.map((n) =>
+        n.id === notification.id
+          ? {
+              ...n,
+              is_read: true,
+              title: accept ? "Friend request accepted" : "Friend request declined",
+            }
+          : n,
+      ),
+    );
     toast.success(accept ? "You are now friends." : "Request declined.");
     load();
   };
