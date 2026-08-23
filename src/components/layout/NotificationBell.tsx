@@ -16,6 +16,7 @@ export function NotificationBell() {
   const [items, setItems] = useState<Notification[]>([]);
   const [open, setOpen] = useState(false);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [pendingRequests, setPendingRequests] = useState<Set<string>>(new Set());
 
   const load = useCallback(async () => {
     if (!user) return;
@@ -24,7 +25,23 @@ export function NotificationBell() {
       .select("*")
       .order("created_at", { ascending: false })
       .limit(20);
-    setItems(data ?? []);
+    const list = data ?? [];
+    setItems(list);
+
+    const requestIds = list
+      .filter((n) => n.type === "friend_request" && n.related_request_id)
+      .map((n) => n.related_request_id as string);
+    if (requestIds.length === 0) {
+      setPendingRequests(new Set());
+      return;
+    }
+    const { data: requests } = await supabase
+      .from("friend_requests")
+      .select("id, status")
+      .in("id", requestIds);
+    setPendingRequests(
+      new Set((requests ?? []).filter((r) => r.status === "pending").map((r) => r.id)),
+    );
   }, [user]);
 
   useEffect(() => {
