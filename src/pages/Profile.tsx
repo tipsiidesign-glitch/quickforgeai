@@ -98,7 +98,7 @@ export default function Profile() {
     const { error } = await supabase.from("friend_requests").insert({ sender_id: user.id, receiver_id: receiverId });
     if (error) return toast.error("Request already sent or not allowed.");
     toast.success("Friend request sent.");
-    setResults((prev) => prev.map((r) => (r.id === receiverId ? { ...r, relation: "pending" } : r)));
+    setResults((prev) => prev.map((r) => (r.id === receiverId ? { ...r, relation: "requested" } : r)));
   };
 
   return (
@@ -176,10 +176,12 @@ export default function Profile() {
                 <p className="truncate font-medium">{r.full_name ?? r.username}</p>
                 <p className="truncate text-xs text-muted-foreground">@{r.username}{r.course ? ` · ${r.course}` : ""}</p>
               </div>
-              {r.relation === "friend" ? (
-                <span className="text-xs font-medium text-success">Friends</span>
-              ) : r.relation === "pending" ? (
-                <span className="text-xs text-muted-foreground">Pending</span>
+              {r.relation === "friends" || friends.some((f) => f.id === r.id) ? (
+                <span className="rounded-full bg-success-soft px-2.5 py-1 text-xs font-semibold text-success">Friends</span>
+              ) : r.relation === "requested" ? (
+                <span className="rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">Requested</span>
+              ) : r.relation === "incoming" ? (
+                <span className="rounded-full bg-accent px-2.5 py-1 text-xs font-medium text-accent-foreground">Wants to connect</span>
               ) : (
                 <Button size="sm" variant="outline" onClick={() => sendRequest(r.id)}>
                   <UserPlus className="mr-1 h-4 w-4" aria-hidden="true" /> Add

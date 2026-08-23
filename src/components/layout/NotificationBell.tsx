@@ -16,6 +16,7 @@ export function NotificationBell() {
   const [items, setItems] = useState<Notification[]>([]);
   const [open, setOpen] = useState(false);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [pendingRequests, setPendingRequests] = useState<Set<string>>(new Set());
 
   const load = useCallback(async () => {
     if (!user) return;
@@ -24,7 +25,23 @@ export function NotificationBell() {
       .select("*")
       .order("created_at", { ascending: false })
       .limit(20);
-    setItems(data ?? []);
+    const list = data ?? [];
+    setItems(list);
+
+    const requestIds = list
+      .filter((n) => n.type === "friend_request" && n.related_request_id)
+      .map((n) => n.related_request_id as string);
+    if (requestIds.length === 0) {
+      setPendingRequests(new Set());
+      return;
+    }
+    const { data: requests } = await supabase
+      .from("friend_requests")
+      .select("id, status")
+      .in("id", requestIds);
+    setPendingRequests(
+      new Set((requests ?? []).filter((r) => r.status === "pending").map((r) => r.id)),
+    );
   }, [user]);
 
   useEffect(() => {
@@ -51,10 +68,11 @@ export function NotificationBell() {
   };
 
   const respond = async (notification: Notification, accept: boolean) => {
-    if (!notification.related_request_id) return;
+    const requestId = notification.related_request_id;
+    if (!requestId) return;
     setBusyId(notification.id);
     const { error } = await supabase.rpc("respond_friend_request", {
-      _request_id: notification.related_request_id,
+      _request_id: requestId,
       _accept: accept,
     });
     setBusyId(null);
@@ -62,6 +80,23 @@ export function NotificationBell() {
       toast.error("Something went wrong. Please try again.");
       return;
     }
+    // Resolve locally so the accept/reject actions disappear immediately.
+    setPendingRequests((prev) => {
+      const next = new Set(prev);
+      next.delete(requestId);
+      return next;
+    });
+    setItems((prev) =>
+      prev.map((n) =>
+        n.id === notification.id
+          ? {
+              ...n,
+              is_read: true,
+              title: accept ? "Friend request accepted" : "Friend request declined",
+            }
+          : n,
+      ),
+    );
     toast.success(accept ? "You are now friends." : "Request declined.");
     load();
   };
@@ -98,7 +133,7 @@ export function NotificationBell() {
                     <p className="text-sm text-muted-foreground">{n.message}</p>
                     <p className="mt-1 text-xs text-muted-foreground">{formatRelativeDate(n.created_at)}</p>
                   </button>
-                  {n.type === "friend_request" && n.related_request_id ? (
+                  {n.type === "friend_request" && n.related_request_id && pendingRequests.has(n.related_request_id) ? (
                     <div className="mt-2 flex gap-2">
                       <Button size="sm" disabled={busyId === n.id} onClick={() => respond(n, true)}>
                         <Check className="mr-1 h-4 w-4" aria-hidden="true" /> Accept
