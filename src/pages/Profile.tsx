@@ -98,7 +98,7 @@ export default function Profile() {
     const { error } = await supabase.from("friend_requests").insert({ sender_id: user.id, receiver_id: receiverId });
     if (error) return toast.error("Request already sent or not allowed.");
     toast.success("Friend request sent.");
-    setResults((prev) => prev.map((r) => (r.id === receiverId ? { ...r, relation: "pending" } : r)));
+    setResults((prev) => prev.map((r) => (r.id === receiverId ? { ...r, relation: "requested" } : r)));
   };
 
   return (

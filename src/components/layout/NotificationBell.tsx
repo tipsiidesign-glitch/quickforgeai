@@ -133,7 +133,7 @@ export function NotificationBell() {
                     <p className="text-sm text-muted-foreground">{n.message}</p>
                     <p className="mt-1 text-xs text-muted-foreground">{formatRelativeDate(n.created_at)}</p>
                   </button>
-                  {n.type === "friend_request" && n.related_request_id ? (
+                  {n.type === "friend_request" && n.related_request_id && pendingRequests.has(n.related_request_id) ? (
                     <div className="mt-2 flex gap-2">
                       <Button size="sm" disabled={busyId === n.id} onClick={() => respond(n, true)}>
                         <Check className="mr-1 h-4 w-4" aria-hidden="true" /> Accept
