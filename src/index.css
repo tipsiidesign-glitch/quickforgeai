@@ -158,6 +158,14 @@
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-family);
     font-feature-settings: "rlig" 1, "calt" 1;
+    background-image: radial-gradient(60rem 60rem at 110% -10%, hsl(var(--accent) / 0.5), transparent 60%),
+      radial-gradient(50rem 50rem at -10% 0%, hsl(var(--primary) / 0.07), transparent 55%);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
   }
 
   :focus-visible {
@@ -169,6 +177,7 @@
   .surface-card {
     @apply rounded-2xl border border-border bg-card;
     box-shadow: var(--shadow-sm);
+    transition: box-shadow 220ms ease, transform 220ms ease, border-color 220ms ease;
   }
 
   .surface-card-hover {
@@ -177,6 +186,17 @@
   .surface-card-hover:hover {
     box-shadow: var(--shadow-md);
     transform: translateY(-2px);
+  }
+
+  .gradient-brand {
+    background-image: var(--gradient-brand);
+  }
+
+  .text-gradient {
+    background-image: var(--gradient-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 }
 
