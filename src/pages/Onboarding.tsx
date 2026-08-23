@@ -19,7 +19,7 @@ const SUBJECTS = [
   "History", "Geography", "Literature", "Law", "Medicine", "Business",
 ];
 const DIFFICULTIES = ["easy", "medium", "hard", "mixed"] as const;
-const COUNTS = [10, 15, 20, 30];
+
 
 export default function Onboarding() {
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ export default function Onboarding() {
   const [bio, setBio] = useState("");
   const [avatar, setAvatar] = useState(`${BUILTIN_PREFIX}${BUILTIN_AVATARS[0].id}`);
   const [difficulty, setDifficulty] = useState<(typeof DIFFICULTIES)[number]>("medium");
-  const [questionCount, setQuestionCount] = useState(15);
+  
 
   useEffect(() => {
     if (profile?.onboarding_completed) navigate("/dashboard", { replace: true });
@@ -97,7 +97,7 @@ export default function Onboarding() {
         avatar_url: avatar,
         avatar_type: "builtin",
         preferred_difficulty: difficulty,
-        preferred_question_count: questionCount,
+        
         onboarding_completed: true,
       })
       .eq("id", user.id);
@@ -242,17 +242,6 @@ export default function Onboarding() {
                     <button key={d} type="button" onClick={() => setDifficulty(d)} aria-pressed={difficulty === d}
                       className={cn("rounded-full border px-3 py-1.5 text-sm capitalize", difficulty === d ? "border-primary bg-primary text-primary-foreground" : "border-border")}>
                       {d}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label>Questions per test</Label>
-                <div className="flex flex-wrap gap-2">
-                  {COUNTS.map((c) => (
-                    <button key={c} type="button" onClick={() => setQuestionCount(c)} aria-pressed={questionCount === c}
-                      className={cn("rounded-full border px-3 py-1.5 text-sm", questionCount === c ? "border-primary bg-primary text-primary-foreground" : "border-border")}>
-                      {c}
                     </button>
                   ))}
                 </div>
